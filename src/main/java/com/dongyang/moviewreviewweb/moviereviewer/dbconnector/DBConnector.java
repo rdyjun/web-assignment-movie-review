@@ -1,4 +1,4 @@
-package com.dongyang.moviewreviewweb.moviereviewer.DBConnector;
+package com.dongyang.moviewreviewweb.moviereviewer.dbconnector;
 
 import org.springframework.beans.factory.annotation.Value;
 
