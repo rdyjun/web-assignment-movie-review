@@ -3,23 +3,33 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <link rel="stylesheet" type="text/css" href="<%= request.getContextPath() %>/css/styles.css">
-    <title>헤더 예제</title>
+    <style>
+        #header {
+            width: 1000px;
+            display: flex;
+            justify-content: space-between;
+        }
+        #logo-menu {
+            display: flex;
+        }
+        #buttons {
+            display: flex;
+        }
+    </style>
 </head>
 <body>
-
 <div id="header">
-    <div id="logo">로고</div>
-    <div id="menu">
-        <a href="#">메뉴1</a>
-        <a href="#">메뉴2</a>
-        <a href="#">메뉴3</a>
+    <div id="logo-menu">
+        <div id="logo">Logo Text</div>
+        <!-- 메뉴바들을 아래와 같이 추가하세요. -->
+        <div class="menu">Menu1</div>
+        <div class="menu">Menu2</div>
+        <!-- ... -->
     </div>
-    <button id="login">로그인</button>
-    <button id="register">회원가입</button>
+    <div id="buttons">
+        <button onclick="location.href='login.jsp'">Login</button>
+        <button onclick="location.href='register.jsp'">Register</button>
+    </div>
 </div>
-
-<!-- 나머지 내용은 여기에 추가 -->
-
 </body>
 </html>

@@ -3,6 +3,7 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="../resources/index.css">
 </head>
 <body>
     <%@ include file="header.jsp" %>
