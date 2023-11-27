@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap');
+
 #bigMoviePoster {
     top: 0;
     left: 50%;
@@ -6,15 +8,18 @@
     position: absolute;
     background: none;
     z-index: 0;
+    overflow: hidden;
 }
 #bigPoster {
-    height: 100%;
-    width: auto;
+    height: 120vh;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0);
 }
 #gradientDiv {
-    position: relative; /* 상대 위치로 설정 */
-    width: 100%;
-    height: 100%;
+    position: relative;
+    width: 100vw;
+    height: 100vh;
 }
 #gradientDiv::after {
     content: '';
@@ -23,7 +28,7 @@
     left: 0;
     height: 100%;
     width: 100%;
-    background: linear-gradient(to right, rgba(0,0,0,1), rgba(0,0,0,0));
+    background: linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0));
 }
 
 #movieInfo {
@@ -31,17 +36,124 @@
     position: absolute;
     z-index: 1;
     left: 50%;
-    top: 10%;
+    top: 15%;
     transform: translate(-50%, 0);
 }
 #movieCategory {
     position: relative;
-    font-size: 96px;
-    font-family: 'Pretendard', sans-serif;
+    font-weight: 700;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
+    font-size: 505%;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 120.6%; /* 116.162px */
+}
+.movieName {
+    position: relative;
+    margin-top: 20px;
+    font-size: 185%;
     font-weight: 700;
 }
-#movieNameKor {
+#movieNameKor::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    margin-top: 120px;
+    width: 2px;
+    height: 62px;
+    background-color: #A7A7A7;
+}
+#movieData {
+    position: absolute;
+    top: 0;
+    margin-top: 425px;
+    color: #A7A7A7;
+    font-family: Rajdhani;
+    font-size: 130%;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 120.6%; /* 25.326px */
+}
+#movieData > p {
+    margin-top: 32px;
+}
+#movieCategory::after {
+    content: 'THE LATEST MOVIE';
+    position: absolute;
+    top: 0;
+    right: -100px;
+    color: #F00;
+    font-family: 'Racing Sans One', cursive !important;
+    font-size: 75%;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+}
+#otherMovies {
+    position: absolute;
+    top: 7vh;
+    right: 0;
+}
+.nextMovie {
+    height: 430px;
+    background-color: #A7A7A7;
+    position: absolute;
+    right: 0;
+}
+#nextMovie {
     position: relative;
-    font-size: 32px;
+    z-index: 5;
+}
+#nextOfNextMovie {
+    position: relative;
+    margin-right: -160px;
+}
+#nextOfNextMovie::after {
+     content: '';
+     position: absolute;
+     top: 0;
+     right: 0;
+     height: 430px;
+     width: 300px;
+     background: linear-gradient(to right, rgba(0,0,0,1), rgba(0, 0, 0, 0.7), rgba(0,0,0,0));
+}
+#simpleReview {
+    padding: 20px;
+    position: absolute;
+    top: 65vh;
+    left: 20%;
+    display: flex;
+    width: 440px;
+    justify-content: space-between;
+    text-shadow: 0px 0px 12px rgba(0, 0, 0, 1);
+    border-radius: 10px; /* 둥근 모서리를 만들어 줍니다 */
+    background-color: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(10px);
+}
+.simpleNumber {
     font-weight: 700;
+    font-size: 175%;
+}
+.simpleName {
+    font-size: 125%;
+}
+#simpleShare > .simpleNumber {
+    color: #9664FF;
+}
+#simpleLike > .simpleNumber {
+    color: #FF0000;
+}
+#movieTrailerContent {
+    position: absolute;
+    right: 0;
+    top: 60vh;
+}
+#movieTrailerTitle {
+    font-size: 175%;
+    font-family: 'Permanent Marker', cursive;
+}
+#trailer {
+    width: 320px;
+    height: 180px;
 }

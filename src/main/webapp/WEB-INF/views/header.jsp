@@ -4,12 +4,11 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../resources/header.css">
-    <link rel="stylesheet" type="text/css" href="../resources/wrap.css">
 </head>
 <body>
-<div id="header">
+<div id="gnb">
     <div id="logo-menu">
-        <a href="/"><div id="logo">Logo Text</div></a>
+        <a href="/"><div id="logo">Talk Films</div></a>
         <div class="menu">Movies</div>
         <div class="menu">Admin</div>
     </div>

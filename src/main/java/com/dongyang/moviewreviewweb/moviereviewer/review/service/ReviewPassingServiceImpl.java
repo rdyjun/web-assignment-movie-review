@@ -22,9 +22,6 @@ public class ReviewPassingServiceImpl implements ReviewPassingService {
     @Value("${movie.url}")
     private String APIURL;
 
-    @Value("${movie.key}")
-    private String APIKey;
-
 //    public ReviewPassingServiceImpl() throws IOException, ParserConfigurationException, SAXException {
 //        dbConnector = new DBConnector();
 //        MovieListAPI movieListAPI = new MovieListAPI();
@@ -34,7 +31,6 @@ public class ReviewPassingServiceImpl implements ReviewPassingService {
 
     @Override
     public void getReviewData (Long movieCode) {
-        System.out.println(APIURL + "?key=" + APIKey);
     }
     @Override
     public List<String> getRank () {

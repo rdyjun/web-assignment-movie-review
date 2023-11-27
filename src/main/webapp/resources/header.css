@@ -6,37 +6,42 @@
 a {
     text-decoration: none;
 }
-#header {
+#gnb {
     left: 50%;
+    top: 2%;
     transform: translate(-50%, 0);
     width: 1400px;
-    display: flex;
     justify-content: space-between;
     align-items: center;
     height: 48px;
     line-height: 48px;
     position: absolute;
+    display: flex;
     z-index: 100;
 }
 #logo {
-    font-family: 'Permanent Marker', cursive;
-    line-height: 48px;
     font-size: 25px;
 }
 #logo-menu {
     display: flex;
+    font-size: 16px;
+}
+#logo-menu div {
+    font-family: 'Permanent Marker', cursive;
 }
 .menu {
     margin-left: 48px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
 }
 #buttons {
     display: flex;
-    border: none;
-    background: none;
     width: auto;
     height: 32px;
     margin-top: 8px;
 }
-button {
-    padding: 0 12px;
+#buttons > button {
+    padding: 0 12px !important;
+    font-size: 16px;
 }
