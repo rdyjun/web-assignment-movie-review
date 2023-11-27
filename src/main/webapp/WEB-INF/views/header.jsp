@@ -4,6 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../resources/header.css">
+    <link rel="stylesheet" type="text/css" href="../resources/wrap.css">
 </head>
 <body>
 <div id="header">
