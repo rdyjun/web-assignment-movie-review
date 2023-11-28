@@ -13,8 +13,8 @@
         <div class="menu">Admin</div>
     </div>
     <div id="buttons">
-        <button onclick="location.href='login.jsp'">Login</button>
-        <button onclick="location.href='register.jsp'">Register</button>
+        <button onclick="location.href='login'">Login</button>
+        <button onclick="location.href='register'">Register</button>
     </div>
 </div>
 </body>

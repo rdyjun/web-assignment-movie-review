@@ -17,8 +17,6 @@ public class SignController {
     @PostMapping("/login")
     public String login (@RequestBody LoginDTO loginDTO, HttpSession httpSession) throws SQLException, ClassNotFoundException {
         loginService.login(loginDTO, httpSession);
-        String errorMessage = "로그인 실패: " + e.getMessage();
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
         return "redirect:/";
     }
 }
