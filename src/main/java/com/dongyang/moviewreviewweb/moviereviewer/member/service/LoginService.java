@@ -1,5 +1,6 @@
-package com.dongyang.moviewreviewweb.moviereviewer.member;
+package com.dongyang.moviewreviewweb.moviereviewer.member.service;
 
+import com.dongyang.moviewreviewweb.moviereviewer.member.entity.LoginDTO;
 import jakarta.servlet.http.HttpSession;
 
 import java.sql.SQLException;

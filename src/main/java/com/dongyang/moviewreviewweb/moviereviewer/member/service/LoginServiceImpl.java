@@ -1,6 +1,7 @@
-package com.dongyang.moviewreviewweb.moviereviewer.member;
+package com.dongyang.moviewreviewweb.moviereviewer.member.service;
 
 import com.dongyang.moviewreviewweb.moviereviewer.dbconnector.DBConnector;
+import com.dongyang.moviewreviewweb.moviereviewer.member.entity.LoginDTO;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import java.util.NoSuchElementException;
 public class LoginServiceImpl implements LoginService {
     @Override
     public void login (LoginDTO loginData, HttpSession httpSession) throws SQLException, ClassNotFoundException {
-        if(!validateAccount(loginData))
+        if(validateAccount(loginData))
             throw new NoSuchElementException("회원 정보가 존재하지 않습니다.");
         httpSession.setAttribute("userId", loginData.getId());
     }
@@ -22,15 +23,15 @@ public class LoginServiceImpl implements LoginService {
         Connection conn = DBConnector.getConnect();
         PreparedStatement pstmt = null;
         ResultSet rs = null;
-        boolean isValid;
-        String sql = "SELECT * FROM users WHERE userId = ? AND password = ?";
+        boolean isValid = true;
+        String sql = "SELECT * FROM member WHERE id = ? AND pw = ?";
         pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, loginData.getId());
         pstmt.setString(2, loginData.getPw());
         rs = pstmt.executeQuery();
-
-        // 결과 확인
-        isValid = rs.next();
+        isValid = !rs.next();
+        pstmt.close();
+        conn.close();
         return isValid;
     }
 }

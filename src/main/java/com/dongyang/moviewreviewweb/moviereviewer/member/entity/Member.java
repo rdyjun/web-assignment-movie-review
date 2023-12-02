@@ -1,4 +1,4 @@
-package com.dongyang.moviewreviewweb.moviereviewer.member;
+package com.dongyang.moviewreviewweb.moviereviewer.member.entity;
 
 public class Member {
     private String name;

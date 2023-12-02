@@ -9,16 +9,9 @@
     <link rel="stylesheet" type="text/css" href="../resources/wrap.css">
 </head>
 <body>
-    <%@ include file="header.jsp" %>
-
-    <% if (pageIndex == null) { %>
+    <header>
+        <%@ include file="header.jsp" %>
+    </header>
     <%@ include file="home.jsp" %>
-    <% } %>
-    <%
-        response.sendRedirect();
-    %>
-    <% if (pageIndex.equals("login")) { %>
-    <%@ include file="login.jsp" %>
-    <% } %>
 </body>
 </html>

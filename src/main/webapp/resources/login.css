@@ -1,5 +1,82 @@
+
+body {
+    background-color: #000;
+}
+
 #loginBox {
+    margin: 0 auto !important;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    transform: translate(-50%, 0);
     width: 580px;
     height: 780px;
     background-color: #fff;
+    border-radius: 40px;
+    display: flex;           /* 추가된 부분 */
+    flex-direction: column;  /* 추가된 부분 */
+    /*justify-content: center; !* 추가된 부분 *!*/
+    align-items: center;     /* 추가된 부분 */
+}
+#loginWelcome {
+    width: 480px;
+    display: flex;
+    height: 200px;
+}
+#printWelcome {
+    font-family: 'Preahvihear';font-size: 20px;
+    flex: 5;
+    line-height: 200px;
+    color: #9664FF;
+}
+#printWelcome > a {
+    font-size: 36px;
+    font-weight: 800;
+    color: #9664FF;
+}
+#hintRegister {
+    flex: 3;
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.hintMessage {
+    line-height: 20px;
+}
+#linkRegister {
+    color: #9664FF;
+    font-weight: bold;
+}
+#hintOfEmail {
+    width: 480px;
+    text-align: left;
+    line-height: 20px;
+    height: 30px;
+}
+#hintOfPassword {
+    width: 480px;
+    text-align: left;
+    margin-top: 40px;
+    height: 30px;
+}
+.loginInputButton {
+    width: 450px;
+    height: 60px;
+    border: 1px solid #ADADAD;
+    border-radius: 10px;
+    padding-left: 30px;
+}
+.loginInputButton::placeholder {
+    color: #A7A7A7;
+}
+#loginSubmitButton {
+    width: 480px;
+    height: 60px;
+    background-color: #9664FF;
+    border-radius: 10px;
+    color: #fff;
+    margin-top: 60px;
+    cursor: pointer;
+    font-size: 18px;
 }
