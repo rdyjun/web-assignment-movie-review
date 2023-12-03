@@ -7,6 +7,6 @@ public class Movie {
     private Long id;
     private String title;
     private String director;
-    private int releaseDate;
+    private String releaseDate;
     private String posterLink;
 }

@@ -34,21 +34,13 @@ public class MovieServiceImpl {
     }
     public String getTrendingMovies () {
         String TrendingMovieURL = env.getProperty("movie.trend.url");
-        String APIKey = env.getProperty("movie.key");
 
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(TrendingMovieURL + "?key=" + APIKey)
-                .queryParam("itemPerPage", 5)
-                .queryParam("repNationCd", "K");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(TrendingMovieURL);
         return getAPIData(builder);
     }
     public String getMovieByMBTI(String mbti) {
-        String movieType = getMovieTypeByMBTI(mbti);
-        String TrendingMovieURL = env.getProperty("movie.url");
-        String APIKey = env.getProperty("movie.key");
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(TrendingMovieURL + "?key=" + APIKey)
-                .queryParam("repNationCd", "K")
-                .queryParam("query_term", movieType)
-                .queryParam("limit", 20);
+        String TrendingMovieURL = env.getProperty("movie.trend.url");
+        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(TrendingMovieURL);
 
         return getAPIData(builder);
     }
@@ -74,14 +66,14 @@ public class MovieServiceImpl {
     public List<MovieDTO> jsonConvertToMovie (String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(json);
-        JsonNode moviesNode = root.path("data").path("movies");
+        JsonNode moviesNode = root.path("results");
         List<MovieDTO> movies = new ArrayList<>();
         for (JsonNode movieNode : moviesNode) {
             Long movieId = Long.parseLong(movieNode.path("id").asText());
-            String movieTitle = movieNode.path("movieNm").asText();
-            String movieDirector = movieNode.path("director").asText();
-            int releaseDate = Integer.parseInt(movieNode.path("openDt").asText());
-            String moviePoster = movieNode.path("medium_cover_image").asText();
+            String movieTitle = movieNode.path("title").asText();
+            String movieDirector = movieNode.path("title").asText();
+            String releaseDate = movieNode.path("release_date").asText();
+            String moviePoster = "https://image.tmdb.org/t/p/original/" + movieNode.path("poster_path").asText();
             MovieDTO movie = new MovieDTO(movieId, movieTitle, movieDirector, releaseDate, moviePoster);
             movies.add(movie);
         }
