@@ -1,0 +1,95 @@
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&display=swap');
+
+* {
+    box-sizing: border-box;
+}
+a {
+    text-decoration: none;
+}
+#gnb {
+    left: 50%;
+    top: 2%;
+    transform: translate(-50%, 0);
+    width: 1400px;
+    justify-content: space-between;
+    align-items: center;
+    height: 48px;
+    line-height: 48px;
+    position: absolute;
+    display: flex;
+    z-index: 100;
+}
+#logo {
+    font-size: 25px;
+}
+#logo-menu {
+    display: flex;
+    font-size: 16px;
+}
+#logo-menu div {
+    font-family: 'Permanent Marker', cursive;
+}
+#rightHeaderContent {
+    display: flex;
+    align-items: center;
+}
+#searchBox {
+    display: flex;
+    justify-content: center;
+    margin-right: 40px;
+}
+#searchInput {
+    background-color: transparent;
+    border: none;
+    border-bottom: 1px solid white;
+    outline: none;
+    color: white;
+}
+.menu {
+    margin-left: 48px;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 400;
+}
+#buttons {
+    display: flex;
+    width: auto;
+    height: 32px;
+    margin-top: 8px;
+    position: relative;
+}
+#buttons > button {
+    padding: 0 12px !important;
+    font-size: 16px;
+}
+#buttons > span {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#myApps {
+    position: absolute;
+    top: 35px;
+    right: 0;
+    width: 150px;
+    height: 200px;
+    background-color: #fff;
+    display: none;
+    flex-direction: column;
+    justify-content: space-between;
+}
+#myApps > form > input, #myApps > button {
+    cursor: pointer;
+    width: 100%;
+    height: 60px;
+    color: #000;
+    text-align: center;
+}
+#myApps > form > input:hover, #myApps > button:hover  {
+    background-color: #9664FF;
+    color: #fff;
+    transition: 0.3s;
+}

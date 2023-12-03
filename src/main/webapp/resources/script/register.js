@@ -26,7 +26,7 @@ function validatePassword () {
         pwConfirm.style.color = "red";
     }
 }
-form.addEventListener('change', validateInputValue)
+form.addEventListener('input', validateInputValue)
 function validateInputValue () {
     if (form.checkValidity() && pw.value === pwConfirm.value) {
         submitButton.disabled = false;

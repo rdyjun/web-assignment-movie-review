@@ -3,10 +3,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../resources/register.css">
-    <link rel="stylesheet" type="text/css" href="../resources/wrap.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/register.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/wrap.css">
     <link href='https://fonts.googleapis.com/css?family=Preahvihear' rel='stylesheet'>
-    <script src="../resources/register.js" defer="defer"></script>
+    <script src="../resources/script/register.js" defer="defer"></script>
 </head>
 <body>
 <form id="registerBox" action="/register-validate" method="post">
@@ -27,7 +27,7 @@
 
     </label>
     <label id="hintOfConfirmPassword" class="hintMessage">Confirm Password
-        <input id="confirmPassword" name="pw" class="loginInputButton" type="password" placeholder="Confirm Password" onchange="validatePassword()" required>
+        <input id="confirmPassword" class="loginInputButton" type="password" placeholder="Confirm Password" oninput="validatePassword()" required>
         <div id="pwCheckVisionIcon"  onmousedown="togglePasswordVisibility('confirmPassword')" onmouseup="togglePasswordInvisibility('confirmPassword')" onmouseout="togglePasswordInvisibility('confirmPassword')"></div>
     </label>
     <input id="loginSubmitButton" type="submit" value="회원가입" disabled>

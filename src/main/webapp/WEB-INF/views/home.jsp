@@ -3,8 +3,8 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="../resources/home.css">
-    <link rel="stylesheet" type="text/css" href="../resources/wrap.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/home.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/wrap.css">
 </head>
 <body>
     <div id="movieInfo">

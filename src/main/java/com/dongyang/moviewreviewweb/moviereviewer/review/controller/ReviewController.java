@@ -17,8 +17,4 @@ public class ReviewController {
     public List<String> getRank () {
         return reviewPassingService.getRank();
     }
-    @PostMapping("/test")
-    public String getTest () {
-        return movieListAPI.getAPI();
-    }
 }
