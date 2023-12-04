@@ -17,6 +17,7 @@
     <div id="logo-menu">
         <a href="/"><div id="logo">Talk Films</div></a>
         <button onclick="location.href='movies'" class="menu">Movies</button>
+        <button onclick="location.href='mbti-movies'" class="menu">MBTI Movies</button>
         <% if (id.equals("admin")) { %>
         <div class="menu">Admin</div>
         <% } %>

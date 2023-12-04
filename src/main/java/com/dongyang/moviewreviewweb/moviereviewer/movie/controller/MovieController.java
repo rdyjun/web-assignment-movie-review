@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class MovieController {
         System.out.println(movieService.getMovieByMBTI("N"));
     }
     @RequestMapping("/movies")
-    public String getMovies (Model model) throws JsonProcessingException {
-        String moviesJson = movieService.getMovies();
+    public String getMovies (@RequestParam(value="sort", required = false) String sort, Model model) throws JsonProcessingException {
+        String moviesJson = movieService.getMovies(sort);
         List<MovieDTO> mdto = movieService.jsonConvertToMovie(moviesJson);
         model.addAttribute("movies", mdto);
         return "movies";
@@ -33,6 +34,6 @@ public class MovieController {
         String moviesJson = movieService.getMovieByMBTI(mbti);
         List<MovieDTO> mdto = movieService.jsonConvertToMovie(moviesJson);
         model.addAttribute("movies", mdto);
-        return "movies";
+        return "mbit-movies";
     }
 }

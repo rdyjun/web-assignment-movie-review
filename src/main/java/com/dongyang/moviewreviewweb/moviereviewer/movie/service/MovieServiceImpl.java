@@ -29,9 +29,13 @@ public class MovieServiceImpl {
 
         return "Error: " + response.getStatusCodeValue();
     }
-    public String getMovies () {
-        return getAPIData(getUriBuilder()
-                .queryParam("sory_by", "popularity.desc"));
+    public String getMovies (String sortBy) {
+        UriComponentsBuilder uri = getUriBuilder();
+        if (sortBy == null || sortBy.equals("pop"))
+            return getAPIData(uri
+                    .queryParam("sort_by", "popularity.desc"));
+        return getAPIData(uri
+                .queryParam("sort_by", "primary_release_date.desc"));
     }
     public String getMovieByMBTI(String mbti) {
         String[] category = new String[4];
@@ -85,6 +89,7 @@ public class MovieServiceImpl {
         String key = env.getProperty("movie.key");
         String url = env.getProperty("movie.url");
         return UriComponentsBuilder.fromUriString(url)
+                .queryParam("region", "KR")
                 .queryParam("include_adult", "false")
                 .queryParam("include_video", "false")
                 .queryParam("language", "ko-KR")

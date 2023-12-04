@@ -11,14 +11,27 @@ body {
     left: 50%;
     transform: translate(-50%, 0);
 }
+#contentTitle {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    margin-bottom: 80px;
+}
 #pageTitle {
+    width: 1000px;
     position: relative;
     font-weight: 700;
     text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.25);
     font-size: 505%;
     font-style: normal;
-    font-weight: 700;
     line-height: 120.6%; /* 116.162px */
+}
+#movieSelecter {
+    width: 80px;
+    height: 40px;
+    color: white;
+    background-color: black;
+    border: none;
 }
 #movieContent {
     width: 1400px;

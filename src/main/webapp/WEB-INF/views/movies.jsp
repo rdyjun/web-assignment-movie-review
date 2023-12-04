@@ -7,17 +7,18 @@
     <link rel="stylesheet" type="text/css" href="../resources/css/movies.css">
     <link rel="stylesheet" type="text/css" href="../resources/css/wrap.css">
     <link href='https://fonts.googleapis.com/css?family=Preahvihear' rel='stylesheet'>
+    <script src="../resources/script/movies.js" defer="defer"></script>
 </head>
 <body>
     <header>
         <%@ include file="header.jsp" %>
     </header>
     <div id="content">
-        <div>
+        <div id="contentTitle">
             <p id="pageTitle">Trending Movies</p>
-            <select>
-                <option selected>최신순</option>
-                <option>mbti</option>
+            <select onchange="changeSort();" id="movieSelecter" name="sort">
+                <option value="pop" selected>인기순</option>
+                <option value="rec" id="rec">최신순</option>
             </select>
         </div>
 
