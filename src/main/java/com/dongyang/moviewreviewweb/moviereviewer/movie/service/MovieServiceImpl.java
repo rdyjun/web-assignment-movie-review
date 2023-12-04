@@ -1,12 +1,9 @@
 package com.dongyang.moviewreviewweb.moviereviewer.movie.service;
 
-import com.dongyang.moviewreviewweb.moviereviewer.dbconnector.DBConnector;
-import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.Movie;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.MovieDTO;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import lombok.Value;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
 import org.springframework.http.ResponseEntity;
@@ -32,35 +29,40 @@ public class MovieServiceImpl {
 
         return "Error: " + response.getStatusCodeValue();
     }
-    public String getTrendingMovies () {
-        String TrendingMovieURL = env.getProperty("movie.trend.url");
-
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(TrendingMovieURL);
-        return getAPIData(builder);
+    public String getMovies () {
+        return getAPIData(getUriBuilder()
+                .queryParam("sory_by", "popularity.desc"));
     }
     public String getMovieByMBTI(String mbti) {
-        String TrendingMovieURL = env.getProperty("movie.trend.url");
-        UriComponentsBuilder builder = UriComponentsBuilder.fromUriString(TrendingMovieURL);
+        String[] category = new String[4];
+        for (int i = 0; i < 4; i++) {
+            category[i] = getMovieTypeByMBTI(mbti.charAt(i));
+        }
 
-        return getAPIData(builder);
+        return getAPIData(getUriBuilder()
+                .queryParam("with_genres", String.join(", ", category)));
     }
 
-    private String getMovieTypeByMBTI(String mbti) {
+    private String getMovieTypeByMBTI(char mbti) {
         switch (mbti) {
-            case "S":
-                return "Documentary";
-            case "N":
-                return "Fantasy";
-            case "T":
-                return "Mystery";
-            case "F":
-                return "Romance";
-            case "J":
-                return "Drama";
-            case "P":
-                return "Adventure";
+            case 'I':
+                return "28";  // Action for Introverted
+            case 'E':
+                return "12";  // Adventure for Extroverted
+            case 'N':
+                return "16";  // Animation for Intuitive
+            case 'S':
+                return "35";  // Comedy for Sensing
+            case 'F':
+                return "80";  // Crime for Feeling
+            case 'T':
+                return "99";  // Documentary for Thinking
+            case 'J':
+                return "18";  // Drama for Judging
+            case 'P':
+                return "10751";  // Family for Perceiving
             default:
-                return "All";
+                throw new IllegalArgumentException("Invalid personality type: " + mbti);
         }
     }
     public List<MovieDTO> jsonConvertToMovie (String json) throws JsonProcessingException {
@@ -78,5 +80,14 @@ public class MovieServiceImpl {
             movies.add(movie);
         }
         return movies;
+    }
+    public UriComponentsBuilder getUriBuilder () {
+        String key = env.getProperty("movie.key");
+        String url = env.getProperty("movie.url");
+        return UriComponentsBuilder.fromUriString(url)
+                .queryParam("include_adult", "false")
+                .queryParam("include_video", "false")
+                .queryParam("language", "ko-KR")
+                .queryParam("api_key", key);
     }
 }

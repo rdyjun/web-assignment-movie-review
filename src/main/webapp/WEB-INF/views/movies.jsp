@@ -13,7 +13,15 @@
         <%@ include file="header.jsp" %>
     </header>
     <div id="content">
-        <p id="pageTitle">Trending Movies</p>
+        <div>
+            <p id="pageTitle">Trending Movies</p>
+            <select>
+                <option selected>최신순</option>
+                <option>mbti</option>
+            </select>
+        </div>
+
+
         <div id="movieContent">
             <c:forEach var="movie" items="${movies}">
                 <div class="movieBox">
