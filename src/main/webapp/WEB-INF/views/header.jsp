@@ -9,6 +9,7 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="../resources/css/header.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/wrap.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="../resources/script/header.js" defer="defer"></script>
 </head>
@@ -19,7 +20,7 @@
         <button onclick="location.href='movies'" class="menu">Movies</button>
         <button onclick="location.href='mbti-movies'" class="menu">MBTI Movies</button>
         <% if (id.equals("admin")) { %>
-        <div class="menu">Admin</div>
+        <button onclick="location.href='admin'" class="menu">Admin</button>
         <% } %>
     </div>
     <div id="rightHeaderContent">

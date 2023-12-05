@@ -1,9 +1,9 @@
 package com.dongyang.moviewreviewweb.moviereviewer.member.entity;
 
-public class LoginDTO {
+public class Login {
     private String id;
     private String pw;
-    public LoginDTO (String id, String pw) {
+    public Login(String id, String pw) {
         this.id = id;
         this.pw = pw;
     }

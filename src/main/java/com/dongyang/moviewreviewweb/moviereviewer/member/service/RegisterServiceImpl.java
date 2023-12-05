@@ -1,47 +1,28 @@
 package com.dongyang.moviewreviewweb.moviereviewer.member.service;
 
-import com.dongyang.moviewreviewweb.moviereviewer.dbconnector.DBConnector;
-import com.dongyang.moviewreviewweb.moviereviewer.member.entity.RegisterDTO;
+import com.dongyang.moviewreviewweb.moviereviewer.member.entity.Register;
+import com.dongyang.moviewreviewweb.moviereviewer.member.repository.MemberDAO;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import org.yaml.snakeyaml.constructor.DuplicateKeyException;
 
 @Service
+@RequiredArgsConstructor
 public class RegisterServiceImpl implements RegisterService {
+    private final MemberDAO memberDAO;
     @Override
-    public void register(RegisterDTO registerDTO) throws SQLException, ClassNotFoundException {
-        Connection connect = DBConnector.getConnect();
-        validateUserData(registerDTO, connect);
-        save(registerDTO, connect);
+    public void register(Register register) {
+        validateUserId(register.getId());
+        validateUserName(register.getName());
+        memberDAO.save(register);
     }
-
-    @Override
-    public boolean validateUserData(RegisterDTO registerDTO, Connection connection) throws SQLException {
-        PreparedStatement pstmt;
-        ResultSet rs = null;
-        String sql = "SELECT * FROM member WHERE id = ?";
-        pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1, registerDTO.getId());
-        rs = pstmt.executeQuery();
-        if (rs.next())
-            throw new IllegalArgumentException();
-        return true;
+    public void validateUserName (String userName) {
+        if (memberDAO.findByUserName(userName).isPresent())
+            throw new IllegalArgumentException("이미 존재하는 닉네임 입니다.");
     }
+    public void validateUserId (String userId) {
+        if (memberDAO.findById(userId).isPresent())
+            throw new IllegalArgumentException("이미 존재하는 아이디 입니다.");
 
-    @Override
-    public boolean save(RegisterDTO registerDTO, Connection connection) throws SQLException {
-        PreparedStatement pstmt;
-        String sql = "INSERT INTO member VALUES (?, ?, ?)";
-        pstmt = connection.prepareStatement(sql);
-        pstmt.setString(1, registerDTO.getName());
-        pstmt.setString(2, registerDTO.getId());
-        pstmt.setString(3, registerDTO.getPw());
-        pstmt.executeUpdate();
-
-        return true;
     }
 }

@@ -19,15 +19,15 @@
         <input name="id" class="loginInputButton" type="email" placeholder="E-mail" required>
     </label>
     <label class="hintMessage">User name
-        <input name="name" class="loginInputButton" type="text" placeholder="User name" required>
+        <input name="name" class="loginInputButton" type="text" placeholder="User name" maxlength="40" required>
     </label>
     <label id="hintOfPassword" class="hintMessage">Password
-        <input id="password" name="pw" class="loginInputButton" type="password" placeholder="Password" onchange="validatePassword()" required>
+        <input id="password" name="pw" class="loginInputButton" type="password" placeholder="Password" onchange="validatePassword()" maxlength="20" required>
         <div id="pwVisionIcon" onmousedown="togglePasswordVisibility('password')" onmouseup="togglePasswordInvisibility('password')" onmouseout="togglePasswordInvisibility('password')"></div>
 
     </label>
     <label id="hintOfConfirmPassword" class="hintMessage">Confirm Password
-        <input id="confirmPassword" class="loginInputButton" type="password" placeholder="Confirm Password" oninput="validatePassword()" required>
+        <input id="confirmPassword" class="loginInputButton" type="password" placeholder="Confirm Password" oninput="validatePassword()" maxlength="20" required>
         <div id="pwCheckVisionIcon"  onmousedown="togglePasswordVisibility('confirmPassword')" onmouseup="togglePasswordInvisibility('confirmPassword')" onmouseout="togglePasswordInvisibility('confirmPassword')"></div>
     </label>
     <input id="loginSubmitButton" type="submit" value="회원가입" disabled>

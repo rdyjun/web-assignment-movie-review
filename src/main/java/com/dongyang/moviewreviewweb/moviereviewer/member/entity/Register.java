@@ -1,6 +1,6 @@
 package com.dongyang.moviewreviewweb.moviereviewer.member.entity;
 
-public class RegisterDTO {
+public class Register {
     private String name;
     private String id;
     private String pw;

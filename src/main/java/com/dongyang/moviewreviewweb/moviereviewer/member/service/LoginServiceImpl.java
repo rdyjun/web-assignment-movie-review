@@ -1,37 +1,27 @@
 package com.dongyang.moviewreviewweb.moviereviewer.member.service;
 
-import com.dongyang.moviewreviewweb.moviereviewer.dbconnector.DBConnector;
-import com.dongyang.moviewreviewweb.moviereviewer.member.entity.LoginDTO;
+import com.dongyang.moviewreviewweb.moviereviewer.member.entity.Login;
+import com.dongyang.moviewreviewweb.moviereviewer.member.entity.Member;
+import com.dongyang.moviewreviewweb.moviereviewer.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpSession;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.nio.file.AccessDeniedException;
 import java.util.NoSuchElementException;
+import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class LoginServiceImpl implements LoginService {
+    private final MemberRepository memberRepository;
     @Override
-    public void login (LoginDTO loginData, HttpSession httpSession) throws SQLException, ClassNotFoundException {
-        if(validateAccount(loginData))
+    public void login (Login loginData, HttpSession httpSession) throws AccessDeniedException {
+        Optional<Member> member = memberRepository.findByIdAndPw(loginData.getId(), loginData.getPw());
+        if (member.isEmpty())
             throw new NoSuchElementException("회원 정보가 존재하지 않습니다.");
+        if (member.get().getStatus())
+            throw new AccessDeniedException("접근이 거부된 계정입니다.");
         httpSession.setAttribute("userId", loginData.getId());
-    }
-    public boolean validateAccount (LoginDTO loginData) throws SQLException, ClassNotFoundException {
-        Connection conn = DBConnector.getConnect();
-        PreparedStatement pstmt = null;
-        ResultSet rs = null;
-        boolean isValid = true;
-        String sql = "SELECT * FROM member WHERE id = ? AND pw = ?";
-        pstmt = conn.prepareStatement(sql);
-        pstmt.setString(1, loginData.getId());
-        pstmt.setString(2, loginData.getPw());
-        rs = pstmt.executeQuery();
-        isValid = !rs.next();
-        pstmt.close();
-        conn.close();
-        return isValid;
     }
 }

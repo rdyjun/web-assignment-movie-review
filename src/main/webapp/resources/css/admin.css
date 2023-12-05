@@ -1,9 +1,172 @@
 body {
     background-color: #000;
+    color: #000;
 }
-#userList {
+#adminContent {
+    width: 1400px;
+    height: 900px;
+    position: absolute;
+    left: 50%;
+    top: 15%;
+    transform: translate(-50%, 0);
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+}
+#contentHeader {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    height: 100%;
+    max-height: 50%;
+    flex: 1;
+}
+.boxTitle {
+    font-size: 22px;
+    font-weight: 700;
+}
+.dataTable {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.dataTitle {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+.dataTitle > li {
+    border-bottom: none !important;
+    margin-bottom: 0px !important;
+}
+.dataTable > ul {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+}
+.dataTable ul > li {
+    height: 42px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    margin-bottom: 20px;
+    width: 100%;
+    text-align: left;
+}
+.userData {
+    height: 24px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+}
+.infoBlock {
+    display: flex;
+    flex-direction: row;
+}
+.blockIcon {
+    color: red !important;
+}
+.unblockIcon {
+    color: green !important;
+}
+#whitelist {
+    width: 100%;
+    height: 100%;
+    overflow-y: scroll;
+    overflow-x: hidden;
     background-color: #fff;
+    border-radius: 16px;
+    padding: 48px;
+    box-sizing: border-box;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
 }
 #blackList {
+    display: none;
+    width: 100%;
+    height: 100%;
     background-color: #fff;
+    border-radius: 16px;
+    padding: 48px;
+    box-sizing: border-box;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+}
+#leftContent {
+    position: relative;
+    width: 100%;
+}
+.dataTitle {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+}
+#report {
+    width: 100%;
+    background-color: #fff;
+    padding: 48px;
+    box-sizing: border-box;
+    border-radius: 16px;
+}
+#userList {
+    position: absolute;
+    right: 100px;
+    top: 20px;
+    color: #000;
+    font-size: 18px;
+    font-weight: 700;
+}
+#blockList {
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    color: #000;
+    font-size: 18px;
+}
+#log {
+    flex: 1;
+    width: 100%;
+    background-color: #fff;
+    border-radius: 16px;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    -ms-overflow-style: none; /* 인터넷 익스플로러 */
+    scrollbar-width: none; /* 파이어폭스 */
+    padding: 48px;
+    box-sizing: border-box;
+}
+.time {
+    flex: 1;
+}
+.logContent {
+    flex: 4;
+}
+.author {
+    flex: 0.8;
+}
+#selectList {
+    width: 100%;
+    right: 0;
+    background-color: #fff;
+    height: 48px;
+    border-radius: 16px;
+    position: absolute;
+}
+
+#log::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+#whitelist::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+#blackList::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
+}
+#userData::-webkit-scrollbar {
+    display: none; /* 크롬, 사파리, 오페라, 엣지 */
 }

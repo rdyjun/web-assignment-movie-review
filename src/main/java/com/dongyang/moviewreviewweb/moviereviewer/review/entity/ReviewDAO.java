@@ -1,0 +1,55 @@
+package com.dongyang.moviewreviewweb.moviereviewer.review.entity;
+
+import com.dongyang.moviewreviewweb.moviereviewer.dbconnector.DBConnector;
+import com.dongyang.moviewreviewweb.moviereviewer.member.entity.Member;
+import com.dongyang.moviewreviewweb.moviereviewer.member.entity.MemberMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
+
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Optional;
+
+@Repository
+public class ReviewDAO {
+    @Autowired
+    private DBConnector dbConnector;
+    public void removeByMemberId (String memberId) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        String sql = "DELETE FROM review WHERE author = ?;";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, memberId);
+            pstmt.executeUpdate();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    public Optional<Review> findById (String id) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        ResultSet rs;
+        Optional<Review> review = null;
+        String sql = "SELECT * FROM review WHERE id = ?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, id);
+            rs = pstmt.executeQuery();
+            if (rs.next())
+                review = Optional.ofNullable(ReviewMapper.mapToEntity(rs));
+            rs.close();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        if (review == null)
+            return Optional.empty();
+        return review;
+    }
+}
