@@ -2,6 +2,7 @@ package com.dongyang.moviewreviewweb.moviereviewer.movie.controller;
 
 import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.MovieDTO;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.service.MovieServiceImpl;
+import com.dongyang.moviewreviewweb.moviereviewer.movieapi.MovieAPI;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -22,17 +23,16 @@ public class MovieController {
     }
     @RequestMapping("/movies")
     public String getMovies (@RequestParam(value="sort", required = false) String sort, Model model) throws JsonProcessingException {
-        String moviesJson = movieService.getMovies(sort);
-        List<MovieDTO> mdto = movieService.jsonConvertToMovie(moviesJson);
+        List<MovieDTO> mdto = movieService.getMovies(sort);
         model.addAttribute("movies", mdto);
         return "movies";
     }
     @RequestMapping("/mbti-movies")
     public String getMovies (Model model, String mbti) throws JsonProcessingException {
         if (mbti == null)
-            mbti = "INFP";
+            mbti = "INFP"; // 기본
         String moviesJson = movieService.getMovieByMBTI(mbti);
-        List<MovieDTO> mdto = movieService.jsonConvertToMovie(moviesJson);
+        List<MovieDTO> mdto = MovieAPI.jsonConvertToMovie(moviesJson);
         model.addAttribute("movies", mdto);
         return "mbtiMovies";
     }

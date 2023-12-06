@@ -8,6 +8,7 @@
     <link rel="stylesheet" type="text/css" href="../resources/css/mbtiMovies.css">
     <link rel="stylesheet" type="text/css" href="../resources/css/wrap.css">
     <link href='https://fonts.googleapis.com/css?family=Preahvihear' rel='stylesheet'>
+    <script src="../resources/script/mbtimovies.js" defer="defer"></script>
 </head>
 <body>
 <header>
@@ -17,21 +18,22 @@
     <div id="contentTitle">
         <p id="pageTitle">Movies For MBTI</p>
         <div id="mbtiSelectBlock">
-            <select>
-                <option selected>I</option>
-                <option>E</option>
+            <c:set var="mbti" value="${param.mbti}" />
+            <select id="first" onchange="mbtipage()">
+                <option ${mbti.contains("I") ? 'selected' : ''}>I</option>
+                <option ${mbti.contains("E") ? 'selected' : ''}>E</option>
             </select>
-            <select>
-                <option selected>N</option>
-                <option>S</option>
+            <select id="second" onchange="mbtipage()">
+                <option ${mbti.contains("N") ? 'selected' : ''}>N</option>
+                <option ${mbti.contains("S") ? 'selected' : ''}>S</option>
             </select>
-            <select>
-                <option selected>F</option>
-                <option>T</option>
+            <select id="third" onchange="mbtipage()">
+                <option ${mbti.contains("F") ? 'selected' : ''}>F</option>
+                <option ${mbti.contains("T") ? 'selected' : ''}>T</option>
             </select>
-            <select>
-                <option selected>P</option>
-                <option>J</option>
+            <select id="fourth" onchange="mbtipage()">
+                <option ${mbti.contains("P") ? 'selected' : ''}>P</option>
+                <option ${mbti.contains("J") ? 'selected' : ''}>J</option>
             </select>
         </div>
     </div>
