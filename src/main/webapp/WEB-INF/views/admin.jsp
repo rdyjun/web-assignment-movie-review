@@ -74,25 +74,26 @@
                 <nav class="infoBlock">
                     <div class="dataTable">
                         <ul class="dataTitle">
-                            <li>Time</li>
-                            <li>Name</li>
-                            <li>Comment</li>
+                            <li class="reportTime">Time</li>
+                            <li class="reportId">Id</li>
+                            <li class="reportComment">Comment</li>
+                            <li class="reportBlock">Block</li>
                         </ul>
-<%--                        <c:forEach var="report" items="${report}" varStatus="status">--%>
-<%--                            <ul>--%>
-<%--                                <li class="userData">${report.reportTime}</li>--%>
-<%--                                <li class="userData">${report.reporter}</li>--%>
-<%--                                <li class="userData" >//해야할 곳</li>--%>
-<%--                                <form method="post" action="/blockMember">--%>
-<%--                                    <input type="text" name="memberId" style="display:none" value="${report.id}">--%>
-<%--                                    <button type="submit">--%>
-<%--                                    <span class="material-icons" class="blockIcon">--%>
-<%--                                        block--%>
-<%--                                    </span>--%>
-<%--                                    </button>--%>
-<%--                                </form>--%>
-<%--                            </ul>--%>
-<%--                        </c:forEach>--%>
+                        <c:forEach var="report" items="${report}" varStatus="status">
+                            <ul>
+                                <li class="userData, reportTime">${report.reportTime}</li>
+                                <li class="userData, reportId">${report.reporter}</li>
+                                <li class="userData, reportComment" >${reportFace[status.index].comment}</li>
+                                <form method="post" action="/blockMember" class="reportBlock">
+                                    <input type="text" name="memberId" style="display:none" value="${reportFace[status.index].target}">
+                                    <button type="submit">
+                                    <span class="material-icons, blockIcon">
+                                        block
+                                    </span>
+                                    </button>
+                                </form>
+                            </ul>
+                        </c:forEach>
                     </div>
                 </nav>
             </div>
