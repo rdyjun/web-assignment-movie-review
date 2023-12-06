@@ -34,6 +34,6 @@ public class MovieController {
         String moviesJson = movieService.getMovieByMBTI(mbti);
         List<MovieDTO> mdto = movieService.jsonConvertToMovie(moviesJson);
         model.addAttribute("movies", mdto);
-        return "mbit-movies";
+        return "mbtiMovies";
     }
 }

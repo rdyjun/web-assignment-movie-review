@@ -5,6 +5,7 @@
 <html>
 <head>
     <link rel="stylesheet" type="text/css" href="../resources/css/movies.css">
+    <link rel="stylesheet" type="text/css" href="../resources/css/mbtiMovies.css">
     <link rel="stylesheet" type="text/css" href="../resources/css/wrap.css">
     <link href='https://fonts.googleapis.com/css?family=Preahvihear' rel='stylesheet'>
 </head>
@@ -13,24 +14,26 @@
     <%@ include file="header.jsp" %>
 </header>
 <div id="content">
-    <div>
-        <p id="pageTitle">Trending Movies</p>
-        <select>
-            <option selected>I</option>
-            <option>E</option>
-        </select>
-        <select>
-            <option selected>N</option>
-            <option>S</option>
-        </select>
-        <select>
-            <option selected>F</option>
-            <option>T</option>
-        </select>
-        <select>
-            <option selected>P</option>
-            <option>J</option>
-        </select>
+    <div id="contentTitle">
+        <p id="pageTitle">Movies For MBTI</p>
+        <div id="mbtiSelectBlock">
+            <select>
+                <option selected>I</option>
+                <option>E</option>
+            </select>
+            <select>
+                <option selected>N</option>
+                <option>S</option>
+            </select>
+            <select>
+                <option selected>F</option>
+                <option>T</option>
+            </select>
+            <select>
+                <option selected>P</option>
+                <option>J</option>
+            </select>
+        </div>
     </div>
 
 
