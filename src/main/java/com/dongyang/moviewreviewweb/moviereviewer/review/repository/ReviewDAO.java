@@ -1,8 +1,10 @@
-package com.dongyang.moviewreviewweb.moviereviewer.review.entity;
+package com.dongyang.moviewreviewweb.moviereviewer.review.repository;
 
 import com.dongyang.moviewreviewweb.moviereviewer.dbconnector.DBConnector;
 import com.dongyang.moviewreviewweb.moviereviewer.member.entity.Member;
 import com.dongyang.moviewreviewweb.moviereviewer.member.entity.MemberMapper;
+import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Review;
+import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 

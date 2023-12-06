@@ -22,7 +22,6 @@
             </select>
         </div>
 
-
         <div id="movieContent">
             <c:forEach var="movie" items="${movies}">
                 <div class="movieBox">

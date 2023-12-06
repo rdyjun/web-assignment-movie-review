@@ -1,7 +1,7 @@
 package com.dongyang.moviewreviewweb.moviereviewer.member.service;
 
 import com.dongyang.moviewreviewweb.moviereviewer.member.repository.MemberDAO;
-import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReviewDAO;
+import com.dongyang.moviewreviewweb.moviereviewer.review.repository.ReviewDAO;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

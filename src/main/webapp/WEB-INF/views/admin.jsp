@@ -82,12 +82,12 @@
                         <c:forEach var="report" items="${report}" varStatus="status">
                             <ul>
                                 <li class="userData, reportTime">${report.reportTime}</li>
-                                <li class="userData, reportId">${report.reporter}</li>
+                                <li class="userData, reportId">${reportFace[status.index].target}</li>
                                 <li class="userData, reportComment" >${reportFace[status.index].comment}</li>
                                 <form method="post" action="/blockMember" class="reportBlock">
                                     <input type="text" name="memberId" style="display:none" value="${reportFace[status.index].target}">
-                                    <button type="submit">
-                                    <span class="material-icons, blockIcon">
+                                    <button type="submit" class="blockIcon">
+                                    <span class="material-icons">
                                         block
                                     </span>
                                     </button>

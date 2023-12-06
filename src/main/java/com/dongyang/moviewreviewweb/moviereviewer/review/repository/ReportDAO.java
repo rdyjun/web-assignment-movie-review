@@ -1,8 +1,10 @@
-package com.dongyang.moviewreviewweb.moviereviewer.review.entity;
+package com.dongyang.moviewreviewweb.moviereviewer.review.repository;
 
 import com.dongyang.moviewreviewweb.moviereviewer.dbconnector.DBConnector;
 import com.dongyang.moviewreviewweb.moviereviewer.member.entity.Member;
 import com.dongyang.moviewreviewweb.moviereviewer.member.entity.MemberMapper;
+import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Report;
+import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReportMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
