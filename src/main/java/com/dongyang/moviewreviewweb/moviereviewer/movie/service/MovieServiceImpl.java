@@ -1,35 +1,33 @@
 package com.dongyang.moviewreviewweb.moviereviewer.movie.service;
 
-import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.MovieDTO;
-import com.dongyang.moviewreviewweb.moviereviewer.movieapi.MovieAPI;
+import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.Movie;
+import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.MovieList;
+import com.dongyang.moviewreviewweb.moviereviewer.movie.movieapi.MovieAPI;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
 import org.springframework.web.util.UriComponentsBuilder;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service
 public class MovieServiceImpl {
-    public List<MovieDTO> getMovies (String sortBy) throws JsonProcessingException {
+    public List<MovieList> getMovies (String sortBy) throws IOException {
         UriComponentsBuilder uri = MovieAPI.getUriBuilder();
-        String sortFrom = null;
-        if (sortBy == null || sortBy.equals("pop"))
-            sortFrom = MovieAPI.getAPIData(uri
-                    .queryParam("sort_by", "popularity.desc"));
-        if (sortBy.equals("rec"))
-            sortFrom = MovieAPI.getAPIData(uri
-                    .queryParam("sort_by", "primary_release_date.desc"));
-
-        return MovieAPI.jsonConvertToMovie(sortFrom);
+        if (sortBy != null && sortBy.equals("rec"))
+            uri.queryParam("sort_by", "primary_release_date.desc");
+        return MovieAPI.jsonConvertToMovieList(MovieAPI.getAPIData(uri));
     }
 
     public String getMovieByMBTI(String mbti) {
         return MovieAPI.getAPIData(MovieAPI.getUriBuilder()
                 .queryParam("with_genres", getMovieTypeByMBTI(mbti)));
     }
-
+    public List<MovieList> getMovieByKeyword (String keyword) throws IOException {
+        UriComponentsBuilder uri = MovieAPI.getSearchUriBuilder();
+        uri.queryParam("query", keyword);
+        return MovieAPI.jsonConvertToMovieList(MovieAPI.getAPIData(uri));
+    }
     private String getMovieTypeByMBTI(String mbti) {
             switch (mbti) {
                 case "INFP":
@@ -67,5 +65,11 @@ public class MovieServiceImpl {
                 default:
                     throw new IllegalArgumentException("해당 mbti는 존재하지 않습니다 : " + mbti);
         }
+    }
+    public Movie getTargetMovie (String movieId) throws JsonProcessingException {
+        UriComponentsBuilder builder = MovieAPI.getMovieTargetBuilder(movieId);
+        String json = MovieAPI.getAPIData(builder);
+        Movie movie = MovieAPI.jsonConvertToMovie(json).get(0);
+        return movie;
     }
 }

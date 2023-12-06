@@ -1,0 +1,8 @@
+#pageTitle {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    height: 90px;
+}
+#noSearch {
+
+}

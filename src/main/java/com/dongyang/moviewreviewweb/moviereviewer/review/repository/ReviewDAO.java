@@ -12,6 +12,8 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -52,6 +54,26 @@ public class ReviewDAO {
         }
         if (review == null)
             return Optional.empty();
+        return review;
+    }
+    public List<Review> findByMovieId (String movieId) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        ResultSet rs;
+        List<Review> review = new ArrayList<>();
+        String sql = "SELECT * FROM review WHERE movieId = ?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, movieId);
+            rs = pstmt.executeQuery();
+            while (rs.next())
+                review.add(ReviewMapper.mapToEntity(rs));
+            rs.close();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         return review;
     }
 }

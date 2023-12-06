@@ -22,6 +22,5 @@ public class RegisterServiceImpl implements RegisterService {
     public void validateUserId (String userId) {
         if (memberRepository.findById(userId).isPresent())
             throw new IllegalArgumentException("이미 존재하는 아이디 입니다.");
-
     }
 }

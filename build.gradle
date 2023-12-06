@@ -30,6 +30,9 @@ dependencies {
 
 	//mysql
 	implementation 'mysql:mysql-connector-java:8.0.26'
+
+	//OkHttp For API
+	implementation 'com.squareup.okhttp3:okhttp:+'
 }
 
 tasks.named('test') {
