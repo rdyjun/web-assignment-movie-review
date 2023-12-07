@@ -47,7 +47,6 @@ body {
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
 }
 .movieBox > p {
     white-space: nowrap;
@@ -62,6 +61,7 @@ body {
 .moviePosterImage {
     width: 180px;
     height: 260px;
+    cursor: pointer;
 }
 .moviePosterImage > img {
     height: 260px;

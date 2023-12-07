@@ -22,6 +22,8 @@ public class Movie {
     private String posterLink;
     private String overView;
     private String videosLink;
+    private double vote_average;
+    private int vote_count;
 
     public void addCategory(String category) {
         if (this.category == null)

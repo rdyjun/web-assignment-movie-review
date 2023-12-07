@@ -46,7 +46,6 @@ function showMenu (element) {
     reviewMenu.style.display = "block";
 }
 document.addEventListener('click', function(event) {
-    console.log("test");
     let reviewMenus = document.querySelectorAll('.reviewMenu');
     reviewMenus.forEach(function(menu) {
         if (event.target !== menu.previousElementSibling && !menu.contains(event.target)) {
@@ -54,3 +53,12 @@ document.addEventListener('click', function(event) {
         }
     });
 });
+
+function validateForm () {
+    let userId = sessionStorage.getItem("userId");
+    if (userId == null) {
+        alert("로그인 후 시도해주세요.");
+        return false;
+    }
+    return true;
+}

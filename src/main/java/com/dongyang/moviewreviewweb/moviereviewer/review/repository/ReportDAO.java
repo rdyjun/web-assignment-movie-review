@@ -15,8 +15,9 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class ReportDAO {
+public class ReportDAO implements ReportRepository {
     private final DBConnector dbConnector;
+    @Override
     public List<Report> findAll () {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;

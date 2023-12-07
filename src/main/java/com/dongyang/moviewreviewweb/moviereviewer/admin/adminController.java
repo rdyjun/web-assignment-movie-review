@@ -6,6 +6,7 @@ import com.dongyang.moviewreviewweb.moviereviewer.member.entity.MemberFace;
 import com.dongyang.moviewreviewweb.moviereviewer.member.service.MemberService;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Report;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReportFace;
+import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReportService;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReportServiceImpl;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ import java.util.List;
 public class adminController {
     private final MemberService memberService;
     private final LogDAO logDAO;
-    private final ReportServiceImpl reportService;
+    private final ReportService reportService;
     @RequestMapping("/admin")
     public String admin (Model model, HttpSession httpSession) {
         if (!httpSession.getAttribute("userId").equals("admin"))

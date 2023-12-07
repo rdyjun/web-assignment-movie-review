@@ -22,7 +22,7 @@
         <p id="noSearch" style="display:${movies.size() == 0 ? 'block' : 'none'}">검색 결과가 없습니다.</p>
         <c:forEach var="movie" items="${movies}">
             <div class="movieBox">
-                <div class="moviePosterImage">
+                <div class="moviePosterImage" onclick="location.href='/movies/${movie.id}'">
                     <img src="${movie.posterLink}">
                 </div>
                 <p class="movieTitle">${movie.title}</p>

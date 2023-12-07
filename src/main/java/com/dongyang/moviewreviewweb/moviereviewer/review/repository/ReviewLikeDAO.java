@@ -10,15 +10,14 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @Repository
 @RequiredArgsConstructor
-public class ReviewLikeDAO {
+public class ReviewLikeDAO implements ReviewLikeRepository {
     private final DBConnector dbConnector;
-    public List<ReviewLike> findByMovieId (String movieId) {
+    @Override
+    public List<ReviewLike> findByMovieId(String movieId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
         ResultSet rs;
@@ -38,7 +37,8 @@ public class ReviewLikeDAO {
         }
         return reviewLikeList;
     }
-    public List<ReviewLike> findByMovieIdAndMemberId (String movieId, String memberId) {
+    @Override
+    public List<ReviewLike> findByMovieIdAndMemberId(String movieId, String memberId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
         ResultSet rs;
@@ -59,7 +59,8 @@ public class ReviewLikeDAO {
         }
         return reviewLikeList;
     }
-    public Optional<ReviewLike> findByMemberIdAndMovieIdAndReviewId (String memberId, String movieId, long reviewId) {
+    @Override
+    public Optional<ReviewLike> findByMemberIdAndMovieIdAndReviewId(String memberId, String movieId, long reviewId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
         ResultSet rs;
@@ -81,7 +82,8 @@ public class ReviewLikeDAO {
         }
         return reviewLikeList;
     }
-    public void save (String memberId, String movieId, long reviewId) {
+    @Override
+    public void save(String memberId, String movieId, long reviewId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
         String sql = "INSERT INTO reviewlike (memberId, movieId, reviewId) VALUES (?, ?, ?)";
@@ -97,7 +99,8 @@ public class ReviewLikeDAO {
             e.printStackTrace();
         }
     }
-    public void remove (String memberId, String movieId, long reviewId) {
+    @Override
+    public void remove(String memberId, String movieId, long reviewId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
         String sql = "DELETE FROM reviewlike WHERE memberId = ? and movieId = ? and reviewId = ?;";
@@ -112,5 +115,26 @@ public class ReviewLikeDAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+    @Override
+    public Map<Long, Integer> countByMovieIdAndGroupByReviewId(String movieId) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        ResultSet rs;
+        Map<Long, Integer> reviewLikeCountList = new HashMap<>();
+        String sql = "SELECT reviewId, COUNT(*) as countLike FROM reviewlike WHERE movieId = ? GROUP BY reviewId";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, movieId);
+            rs = pstmt.executeQuery();
+            if (rs.next())
+                reviewLikeCountList.put(rs.getLong("reviewId"), rs.getInt("countLike"));
+            rs.close();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return reviewLikeCountList;
     }
 }

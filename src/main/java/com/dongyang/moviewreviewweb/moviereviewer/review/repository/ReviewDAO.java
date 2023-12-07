@@ -15,9 +15,10 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class ReviewDAO {
+public class ReviewDAO implements ReviewRepository {
     @Autowired
     private DBConnector dbConnector;
+    @Override
     public void save (Review review) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
@@ -36,6 +37,7 @@ public class ReviewDAO {
             e.printStackTrace();
         }
     }
+    @Override
     public void removeByMemberId (String memberId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
@@ -50,6 +52,7 @@ public class ReviewDAO {
             e.printStackTrace();
         }
     }
+    @Override
     public Optional<Review> findById (String id) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
@@ -72,6 +75,7 @@ public class ReviewDAO {
             return Optional.empty();
         return review;
     }
+    @Override
     public List<Review> findByMovieId (String movieId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
@@ -92,6 +96,7 @@ public class ReviewDAO {
         }
         return review;
     }
+    @Override
     public List<Review> findByMemberIdAndMovieId (String memberId, String movieId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;

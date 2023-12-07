@@ -43,21 +43,11 @@
             <input id="rating" name="rating" type="number" value="0" style="display:none">
             <input name="movieId" value="${movie.id}" style="display:none">
             <div class="rating-stars">
+                <c:forEach var="i" begin="1" end="5" step="1" varStatus="status">
                 <svg class="writeStar" onclick="selectRating(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
                     <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
                 </svg>
-                <svg class="writeStar" onclick="selectRating(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
-                </svg>
-                <svg class="writeStar" onclick="selectRating(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
-                </svg>
-                <svg class="writeStar" onclick="selectRating(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
-                </svg>
-                <svg class="writeStar" onclick="selectRating(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
-                    <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
-                </svg>
+                </c:forEach>
             </div>
             <textarea id="reviewTextArea" placeholder="이곳에 리뷰를 작성해주세요." maxlength="50" value="" name="reviewComment"></textarea>
             <div id="saveOrCancel">
@@ -65,6 +55,7 @@
                 <button id="saveButton" type="submit">저장</button>
             </div>
         </form>
+        <p id="reviewNotFound" style="display: ${reviews.size() == 0 ? "block" : "none"}">작성된 리뷰가 없습니다.</p>
         <div id="reviewList">
             <c:forEach var="review" items="${reviews}">
                 <div class="movieBox">
@@ -79,13 +70,14 @@
 
                     <p class="comment">${review.comment}</p>
                     <p class="date">${review.writeTime}</p>
-                    <form class="likeButtonBox" method="post" action="/like-review">
+                    <form class="likeButtonBox" method="post" action="/like-review" onsubmit="return validateForm()">
                         <input name="movieId" value="${movie.id}" type="hidden">
                         <input name="reviewId" value="${review.id}" type="hidden">
-                        <button type="submit">
+                        <button type="submit" >
                         <span class="material-icons" style="color:${like.contains(review.id) ? "#9664FF" : "#888"}">
                             thumb_up
                         </span>
+                        <p class="likeCount">${likeCount.getOrDefault(review.id, 0)}</p>
                         </button>
                     </form>
                     <div class="reviewMenuBox">
@@ -100,7 +92,6 @@
                 </div>
             </c:forEach>
         </div>
-
     </div>
 </div>
 </body>

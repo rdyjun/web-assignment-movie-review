@@ -114,6 +114,10 @@ body {
     background-color: #CCC !important;
     color: #252525;
 }
+#reviewNotFound {
+    text-align: center;
+    font-size: 24px;
+}
 #reviewList {
     display: flex;
     flex-direction: column;
@@ -179,4 +183,7 @@ body {
     transition: 0.3s;
     background-color: #9664FF;
     color: #fff;
+}
+.likeCount {
+    color: #000;
 }

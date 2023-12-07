@@ -9,8 +9,8 @@
     height: 80px;
     background-color: #000;
     font-size: 24px;
-    -webkit-appearance:none; /* 크롬 화살표 없애기 */
-    -moz-appearance:none; /* 파이어폭스 화살표 없애기 */
-    appearance:none; /* 화살표 없애기 */
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
     text-align: center;
 }

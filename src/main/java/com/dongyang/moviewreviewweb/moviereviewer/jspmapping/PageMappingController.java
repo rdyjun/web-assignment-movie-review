@@ -10,10 +10,6 @@ import java.net.URISyntaxException;
 
 @Controller
 public class PageMappingController {
-    @GetMapping("/")
-    public String index () {
-        return "index";
-    }
     @GetMapping("/login")
     public String login (HttpServletRequest request, HttpSession session) throws URISyntaxException {
         String previousPageUrl = request.getHeader("Referer");
@@ -23,7 +19,11 @@ public class PageMappingController {
         return "login";
     }
     @GetMapping("/register")
-    public String register () {
+    public String register (HttpSession session, HttpServletRequest request) throws URISyntaxException {
+        String previousPageUrl = request.getHeader("Referer");
+        URI uri = new URI(previousPageUrl);
+        String path = uri.getPath();
+        session.setAttribute("prevURL", path);
         return "register";
     }
 }

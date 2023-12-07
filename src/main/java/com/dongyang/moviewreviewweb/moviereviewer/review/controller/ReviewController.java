@@ -1,5 +1,6 @@
 package com.dongyang.moviewreviewweb.moviereviewer.review.controller;
 
+import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewLikeService;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewLikeServiceImpl;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewService;
 import jakarta.servlet.http.HttpSession;
@@ -11,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class ReviewController {
     private final ReviewService reviewService;
-    private final ReviewLikeServiceImpl reviewLikeService;
+    private final ReviewLikeService reviewLikeService;
     @PostMapping("/write-review")
     public String writeReview (HttpSession session, float rating, String reviewComment, String movieId) {
         String userId = (String) session.getAttribute("userId");

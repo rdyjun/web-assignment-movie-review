@@ -8,27 +8,31 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
-public class MovieServiceImpl {
+public class MovieServiceImpl implements MovieService {
+    @Override
     public List<MovieList> getMovies (String sortBy) throws IOException {
         UriComponentsBuilder uri = MovieAPI.getUriBuilder();
         if (sortBy != null && sortBy.equals("rec"))
             uri.queryParam("sort_by", "primary_release_date.desc");
         return MovieAPI.jsonConvertToMovieList(MovieAPI.getAPIData(uri));
     }
-
+    @Override
     public String getMovieByMBTI(String mbti) {
         return MovieAPI.getAPIData(MovieAPI.getUriBuilder()
                 .queryParam("with_genres", getMovieTypeByMBTI(mbti)));
     }
-    public List<MovieList> getMovieByKeyword (String keyword) throws IOException {
+    @Override
+    public List<MovieList> getMovieByKeyword(String keyword) throws IOException {
         UriComponentsBuilder uri = MovieAPI.getSearchUriBuilder();
         uri.queryParam("query", keyword);
         return MovieAPI.jsonConvertToMovieList(MovieAPI.getAPIData(uri));
     }
-    private String getMovieTypeByMBTI(String mbti) {
+    @Override
+    public String getMovieTypeByMBTI(String mbti) {
             switch (mbti) {
                 case "INFP":
                     return "14"; // 판타지 장르 코드
@@ -66,10 +70,25 @@ public class MovieServiceImpl {
                     throw new IllegalArgumentException("해당 mbti는 존재하지 않습니다 : " + mbti);
         }
     }
-    public Movie getTargetMovie (String movieId) throws JsonProcessingException {
+    @Override
+    public Movie getTargetMovie(String movieId) throws JsonProcessingException {
         UriComponentsBuilder builder = MovieAPI.getMovieTargetBuilder(movieId);
         String json = MovieAPI.getAPIData(builder);
-        Movie movie = MovieAPI.jsonConvertToMovie(json).get(0);
+        Movie movie = MovieAPI.jsonConvertToMovie(json);
         return movie;
+    }
+    @Override
+    public List<MovieList> getTopThreeMovie() throws JsonProcessingException {
+        UriComponentsBuilder builder = MovieAPI.getUriBuilder();
+        String json = MovieAPI.getAPIData(builder);
+        List<MovieList> movieList = MovieAPI.jsonConvertToTopThreeMovie(json);
+        return movieList;
+    }
+    @Override
+    public List<Movie> getMovieDataList (List<MovieList> movieLists) throws JsonProcessingException {
+        List<Movie> movieList = new ArrayList<>();
+        for (MovieList mList : movieLists)
+            movieList.add(getTargetMovie(String.valueOf(mList.getId())));
+        return movieList;
     }
 }

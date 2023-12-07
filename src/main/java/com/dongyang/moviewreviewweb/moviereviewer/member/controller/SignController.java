@@ -37,7 +37,7 @@ public class SignController {
         return "redirect:" + httpSession.getAttribute("prevURL");
     }
     @PostMapping("/register-validate")
-    public String register (Register register) throws SQLException, ClassNotFoundException {
+    public String register (HttpSession session, Register register) throws SQLException, ClassNotFoundException {
         registerService.register(register);
         Log log = new Log("회원가입", register.getId());
         logDAO.create(log);
@@ -55,8 +55,9 @@ public class SignController {
     public String logout (HttpSession httpSession) {
         Log log = new Log("로그아웃", (String) httpSession.getAttribute("userId"));
         logDAO.create(log);
+        String prevURL = (String) httpSession.getAttribute("prevURL");
         httpSession.invalidate();
-        return "redirect:/";
+        return "redirect:" + prevURL;
     }
     @ExceptionHandler({NoSuchElementException.class,
             IllegalArgumentException.class,

@@ -24,8 +24,8 @@
 
         <div id="movieContent">
             <c:forEach var="movie" items="${movies}">
-                    <div class="movieBox" onclick="location.href='/movies/${movie.id}'">
-                        <div class="moviePosterImage">
+                    <div class="movieBox">
+                        <div class="moviePosterImage" onclick="location.href='/movies/${movie.id}'">
                             <img src="${movie.posterLink}">
                         </div>
                         <p class="movieTitle">${movie.title}</p>

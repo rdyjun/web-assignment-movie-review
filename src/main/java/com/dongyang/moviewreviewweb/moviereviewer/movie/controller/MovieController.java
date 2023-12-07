@@ -6,8 +6,11 @@ import com.dongyang.moviewreviewweb.moviereviewer.movie.movieapi.MovieAPI;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.service.MovieServiceImpl;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Review;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReviewLike;
+import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReviewLikeCount;
+import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewLikeService;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewLikeServiceImpl;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 @Controller
@@ -26,7 +30,7 @@ import java.util.Set;
 public class MovieController {
     private final MovieServiceImpl movieService;
     private final ReviewService reviewService;
-    private final ReviewLikeServiceImpl reviewLikeService;
+    private final ReviewLikeService reviewLikeService;
     @PostMapping("/test")
     public void test () {
         System.out.println("");
@@ -58,10 +62,19 @@ public class MovieController {
         String memberId = (String) session.getAttribute("userId");
         Movie movie = movieService.getTargetMovie(id);
         List<Review> reviewList = reviewService.getReviewByMovie(id);
+        Map<Long, Integer> likeCount = reviewLikeService.getLikeCount(id);
         Set<Long> reviewLikeList = reviewLikeService.getReviewLikeListByMovieIdAndMemberId(id, memberId);
         model.addAttribute("movie", movie);
         model.addAttribute("reviews", reviewList);
         model.addAttribute("like", reviewLikeList);
+        model.addAttribute("likeCount", likeCount);
         return "/movieReview";
+    }
+    @RequestMapping("/")
+    public String root (Model model) throws JsonProcessingException {
+        List<MovieList> movieList = movieService.getTopThreeMovie();
+        List<Movie> movies = movieService.getMovieDataList(movieList);
+        model.addAttribute("movies", movies);
+        return "index";
     }
 }

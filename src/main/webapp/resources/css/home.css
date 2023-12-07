@@ -1,40 +1,139 @@
 @import url('https://fonts.googleapis.com/css2?family=Racing+Sans+One&display=swap');
 
-#bigMoviePoster {
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, 0%);
-    height: 100vh;
-    position: absolute;
-    background: none;
-    z-index: 0;
+body {
     overflow: hidden;
 }
-#bigPoster {
-    height: 120vh;
-    position: absolute;
-    left: 50%;
-    transform: translate(-50%, 0);
-}
-#gradientDiv {
+#moviePosters {
     position: relative;
-    width: 100vw;
-    height: 100vh;
-}
-#gradientDiv::after {
-    content: '';
-    position: absolute;
     top: 0;
     left: 0;
+    height: 100vh;
+}
+.moviePosterContainer {
+    height: 344px;
+    position: absolute;
+    z-index: 10;
+    top: 24%;
+}
+.moviePosterContainer:nth-of-type(2) {
+    left: 70%;
+    transform: translate(-50%, 0%);
+    z-index: 5;
+}
+.moviePosterContainer:last-of-type {
+    left: 80%;
+    transform: translate(-50%, 0%);
+    z-index: 4;
+}
+.focus > img {
+    height: 115vh;
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    z-index: 0;
+}
+.focus > img::after {
+    content: '';
+    position: absolute;
     height: 100%;
     width: 100%;
     background: linear-gradient(to right, rgba(0,0,0,0.75), rgba(0,0,0,0));
 }
-
+.animate-focus {
+    animation: focus-animation 5s forwards;
+    animation-iteration-count: infinite;
+}
+@keyframes focus-animation {
+    0% {
+        position: absolute;
+        height: 115vh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+    }
+    70% {
+        position: absolute;
+        height: 115vh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+    }
+    100% {
+        position: absolute;
+        height: 344px;
+        top: 50%;
+        left: 90%;
+        transform: translate(-50%, -50%);
+        z-index: 4;
+    }
+}
+.animate-first {
+    animation: first-animation 5s forwards;
+    animation-iteration-count: infinite;
+}
+@keyframes first-animation {
+    0% {
+        position: absolute;
+        height: 344px;
+        top: 50%;
+        left: 80%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+    }
+    70% {
+        position: absolute;
+        height: 344px;
+        top: 50%;
+        left: 80%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+    }
+    100% {
+        position: absolute;
+        height: 115vh;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: 0;
+    }
+}
+.animate-second {
+    animation: second-animation 5s forwards;
+    animation-iteration-count: infinite;
+}
+@keyframes second-animation {
+    0% {
+        position: absolute;
+        height: 344px;
+        top: 50%;
+        left: 90%;
+        transform: translate(-50%, -50%);
+        z-index: 4;
+    }
+    70% {
+        position: absolute;
+        height: 344px;
+        top: 50%;
+        left: 90%;
+        transform: translate(-50%, -50%);
+        z-index: 4;
+    }
+    100% {
+        position: absolute;
+        height: 344px;
+        top: 50%;
+        left: 80%;
+        transform: translate(-50%, -50%);
+        z-index: 5;
+    }
+}
 #movieInfo {
     width: 1400px;
     position: absolute;
-    z-index: 1;
+    z-index: 500;
     left: 50%;
     top: 15%;
     transform: translate(-50%, 0);
@@ -90,34 +189,6 @@
     font-weight: 400;
     line-height: normal;
 }
-#otherMovies {
-    position: absolute;
-    top: 7vh;
-    right: 0;
-}
-.nextMovie {
-    height: 430px;
-    background-color: #A7A7A7;
-    position: absolute;
-    right: 0;
-}
-#nextMovie {
-    position: relative;
-    z-index: 5;
-}
-#nextOfNextMovie {
-    position: relative;
-    margin-right: -160px;
-}
-#nextOfNextMovie::after {
-     content: '';
-     position: absolute;
-     top: 0;
-     right: 0;
-     height: 430px;
-     width: 300px;
-     background: linear-gradient(to right, rgba(0,0,0,1), rgba(0, 0, 0, 0.7), rgba(0,0,0,0));
-}
 #simpleReview {
     padding: 20px;
     position: absolute;
@@ -147,7 +218,7 @@
 #movieTrailerContent {
     position: absolute;
     right: 0;
-    top: 60vh;
+    top: 50vh;
 }
 #movieTrailerTitle {
     font-size: 175%;

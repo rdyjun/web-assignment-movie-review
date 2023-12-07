@@ -16,6 +16,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class MovieAPI {
@@ -77,11 +78,10 @@ public class MovieAPI {
         }
         return movies;
     }
-    public static List<Movie> jsonConvertToMovie (String json) throws JsonProcessingException {
+    public static Movie jsonConvertToMovie (String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
         JsonNode root = mapper.readTree(json);
         JsonNode genres = root.path("genres");
-        List<Movie> movies = new ArrayList<>();
         Movie movie = new Movie();
         movie.setId(Long.parseLong(root.path("id").asText()));
         movie.setTitle(root.path("title").asText());
@@ -93,8 +93,9 @@ public class MovieAPI {
         movie.setOverView(root.path("overview").asText());
         movie.setPosterLink("https://image.tmdb.org/t/p/original/" + root.path("poster_path").asText());
         movie.setVideosLink(jsonConvertToVideosLink(getAPIData(getMovieVideosLinkBuilder(root.path("id").asText()))));
-        movies.add(movie);
-        return movies;
+        movie.setVote_average(root.path("vote_average").asDouble());
+        movie.setVote_count(root.path("vote_count").asInt());
+        return movie;
     }
     public static String jsonConvertToVideosLink (String json) throws JsonProcessingException {
         ObjectMapper mapper = new ObjectMapper();
@@ -121,5 +122,20 @@ public class MovieAPI {
         return UriComponentsBuilder.fromUriString(url + movieId)
                 .queryParam("api_key", key)
                 .queryParam("language", "ko-KR");
+    }
+    public static List<MovieList> jsonConvertToTopThreeMovie (String json) throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        JsonNode root = mapper.readTree(json);
+        JsonNode moviesNode = root.path("results");
+        List<MovieList> movies = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            JsonNode movieNode = moviesNode.get(i);
+            MovieList movie = new MovieList();
+            movie.setId(Long.parseLong(movieNode.path("id").asText()));
+            movie.setTitle(movieNode.path("title").asText());
+            movie.setPosterLink("https://image.tmdb.org/t/p/original/" + movieNode.path("poster_path").asText());
+            movies.add(movie);
+        }
+        return movies;
     }
 }

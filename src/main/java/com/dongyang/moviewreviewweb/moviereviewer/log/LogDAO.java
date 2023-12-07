@@ -11,9 +11,10 @@ import java.util.List;
 
 @Repository
 @RequiredArgsConstructor
-public class LogDAO {
+public class LogDAO implements LogRepository {
     private final DBConnector dbConnector;
-    public boolean create (Log log) {
+    @Override
+    public boolean create(Log log) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
         String sql = "INSERT INTO log (logDate, content, author) VALUES (?, ?, ?)";
@@ -32,6 +33,7 @@ public class LogDAO {
         }
         return true;
     }
+    @Override
     public List<Log> getAllLog () {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
