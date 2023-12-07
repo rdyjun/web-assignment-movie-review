@@ -1,10 +1,8 @@
 package com.dongyang.moviewreviewweb.moviereviewer.review.repository;
 
 import com.dongyang.moviewreviewweb.moviereviewer.dbconnector.DBConnector;
-import com.dongyang.moviewreviewweb.moviereviewer.member.entity.Member;
-import com.dongyang.moviewreviewweb.moviereviewer.member.entity.MemberMapper;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Review;
-import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReviewMapper;
+import com.dongyang.moviewreviewweb.moviereviewer.review.mapper.ReviewMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -20,6 +18,24 @@ import java.util.Optional;
 public class ReviewDAO {
     @Autowired
     private DBConnector dbConnector;
+    public void save (Review review) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        String sql = "INSERT INTO review(writeTime, author, movieId, comment, rating) VALUES (?, ?, ?, ?, ?)";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setTimestamp(1, review.getWriteTime());
+            pstmt.setString(2, review.getAuthor());
+            pstmt.setString(3, review.getMovieId());
+            pstmt.setString(4, review.getComment());
+            pstmt.setFloat(5, review.getRating());
+            pstmt.executeUpdate();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
     public void removeByMemberId (String memberId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
@@ -65,6 +81,27 @@ public class ReviewDAO {
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, movieId);
+            rs = pstmt.executeQuery();
+            while (rs.next())
+                review.add(ReviewMapper.mapToEntity(rs));
+            rs.close();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return review;
+    }
+    public List<Review> findByMemberIdAndMovieId (String memberId, String movieId) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        ResultSet rs;
+        List<Review> review = new ArrayList<>();
+        String sql = "SELECT * FROM review WHERE author = ? and movieId = ?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, memberId);
+            pstmt.setString(2, movieId);
             rs = pstmt.executeQuery();
             while (rs.next())
                 review.add(ReviewMapper.mapToEntity(rs));

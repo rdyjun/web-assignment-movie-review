@@ -3,13 +3,10 @@ package com.dongyang.moviewreviewweb.moviereviewer.review.service;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Review;
 import com.dongyang.moviewreviewweb.moviereviewer.review.repository.ReviewDAO;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
 
-import java.util.ArrayList;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -19,5 +16,11 @@ public class ReviewServiceImpl implements ReviewService {
     @Override
     public List<Review> getReviewByMovie (String movieId) {
         return reviewDAO.findByMovieId(movieId);
+    }
+    @Override
+    public void saveReview (String movieId, String userId, String comment, float rating) {
+        Timestamp date = Timestamp.valueOf(LocalDateTime.now());
+        Review review = new Review(rating, comment, userId, date, movieId);
+        reviewDAO.save(review);
     }
 }

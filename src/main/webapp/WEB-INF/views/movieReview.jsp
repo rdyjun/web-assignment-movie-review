@@ -7,7 +7,7 @@
     <link rel="stylesheet" type="text/css" href="../resources/css/movieReview.css">
     <link rel="stylesheet" type="text/css" href="../resources/css/wrap.css">
     <link href='https://fonts.googleapis.com/css?family=Preahvihear' rel='stylesheet'>
-    <script src="../resources/script/movies.js" defer="defer"></script>
+    <script src="../resources/script/moviereview.js" defer="defer"></script>
 </head>
 <body>
 <header>
@@ -28,14 +28,78 @@
                     </span>
                     <p id="runtime">${movie.runtime}분</p>
                 </div>
-
             </li>
-            <li id="category">장르: ${String.join(", ", movie.category)}</li>
-            <li id="overView">설명: ${movie.overView}</li>
+            <li id="category">${String.join(", ", movie.category)}</li>
+            <li id="overView">${movie.overView}</li>
             <iframe src="${movie.videosLink}" id="videos" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </ul>
     </div>
     <div id="reviews">
+        <div id="reviewTitleBox">
+            <p id="reviewTitle">리뷰</p>
+            <button id="reviewWrite" onclick="onWriteBox('${sessionScope.get('userId')}')">작성</button>
+        </div>
+        <form id="reviewWriteBox" method="post" action="/write-review" style="display:none">
+            <input id="rating" name="rating" type="number" value="0" style="display:none">
+            <input name="movieId" value="${movie.id}" style="display:none">
+            <div class="rating-stars">
+                <svg class="writeStar" onclick="selectRating(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
+                </svg>
+                <svg class="writeStar" onclick="selectRating(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
+                </svg>
+                <svg class="writeStar" onclick="selectRating(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
+                </svg>
+                <svg class="writeStar" onclick="selectRating(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
+                </svg>
+                <svg class="writeStar" onclick="selectRating(this)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24">
+                    <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
+                </svg>
+            </div>
+            <textarea id="reviewTextArea" placeholder="이곳에 리뷰를 작성해주세요." maxlength="50" value="" name="reviewComment"></textarea>
+            <div id="saveOrCancel">
+                <button id="cancelButton" onclick="cancel()" type="button">취소</button>
+                <button id="saveButton" type="submit">저장</button>
+            </div>
+        </form>
+        <div id="reviewList">
+            <c:forEach var="review" items="${reviews}">
+                <div class="movieBox">
+                    <p class="reviewAuthor">${review.author}</p>
+                    <div class="stars">
+                        <c:forEach var="i" begin="1" end="5" step="1" varStatus="status">
+                        <svg class="reviewRating" fill="${review.rating >= i ? "#9664FF" : "#888888"}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">
+                            <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
+                        </svg>
+                        </c:forEach>
+                    </div>
+
+                    <p class="comment">${review.comment}</p>
+                    <p class="date">${review.writeTime}</p>
+                    <form class="likeButtonBox" method="post" action="/like-review">
+                        <input name="movieId" value="${movie.id}" type="hidden">
+                        <input name="reviewId" value="${review.id}" type="hidden">
+                        <button type="submit">
+                        <span class="material-icons" style="color:${like.contains(review.id) ? "#9664FF" : "#888"}">
+                            thumb_up
+                        </span>
+                        </button>
+                    </form>
+                    <div class="reviewMenuBox">
+                        <span class="material-icons" onclick="showMenu(this)">
+                            more_vert
+                        </span>
+                        <div class="reviewMenu">
+                            <button>신고</button>
+                            <button>삭제</button>
+                        </div>
+                    </div>
+                </div>
+            </c:forEach>
+        </div>
 
     </div>
 </div>

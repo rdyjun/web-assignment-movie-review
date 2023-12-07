@@ -1,8 +1,16 @@
 package com.dongyang.moviewreviewweb.moviereviewer.review.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
 import java.sql.Timestamp;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class Review {
+    private long id;
     private float rating;
     private String comment;
     private String author;
@@ -15,25 +23,5 @@ public class Review {
         this.author = author;
         this.writeTime = writeTime;
         this.movieId = movieId;
-    }
-
-    public float getRating() {
-        return rating;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public String getAuthor() {
-        return author;
-    }
-
-    public Timestamp getWriteTime() {
-        return writeTime;
-    }
-
-    public String getMovieId() {
-        return movieId;
     }
 }

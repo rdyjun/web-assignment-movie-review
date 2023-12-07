@@ -1,10 +1,8 @@
 package com.dongyang.moviewreviewweb.moviereviewer.review.repository;
 
 import com.dongyang.moviewreviewweb.moviereviewer.dbconnector.DBConnector;
-import com.dongyang.moviewreviewweb.moviereviewer.member.entity.Member;
-import com.dongyang.moviewreviewweb.moviereviewer.member.entity.MemberMapper;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Report;
-import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReportMapper;
+import com.dongyang.moviewreviewweb.moviereviewer.review.mapper.ReportMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -14,7 +12,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @Repository
 @RequiredArgsConstructor

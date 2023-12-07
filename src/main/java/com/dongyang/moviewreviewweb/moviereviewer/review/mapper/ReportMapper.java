@@ -1,4 +1,6 @@
-package com.dongyang.moviewreviewweb.moviereviewer.review.entity;
+package com.dongyang.moviewreviewweb.moviereviewer.review.mapper;
+
+import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Report;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;

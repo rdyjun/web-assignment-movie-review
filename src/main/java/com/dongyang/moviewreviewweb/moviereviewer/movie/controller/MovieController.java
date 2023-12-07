@@ -5,7 +5,10 @@ import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.MovieList;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.movieapi.MovieAPI;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.service.MovieServiceImpl;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Review;
+import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReviewLike;
+import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewLikeServiceImpl;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,12 +19,14 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @Controller
 @RequiredArgsConstructor
 public class MovieController {
     private final MovieServiceImpl movieService;
     private final ReviewService reviewService;
+    private final ReviewLikeServiceImpl reviewLikeService;
     @PostMapping("/test")
     public void test () {
         System.out.println("");
@@ -49,11 +54,14 @@ public class MovieController {
         return "search";
     }
     @RequestMapping("/movies/{id}")
-    public String getMovieInfo (@PathVariable String id, Model model) throws IOException {
+    public String getMovieInfo (@PathVariable String id, HttpSession session, Model model) throws IOException {
+        String memberId = (String) session.getAttribute("userId");
         Movie movie = movieService.getTargetMovie(id);
         List<Review> reviewList = reviewService.getReviewByMovie(id);
+        Set<Long> reviewLikeList = reviewLikeService.getReviewLikeListByMovieIdAndMemberId(id, memberId);
         model.addAttribute("movie", movie);
-        model.addAttribute("review", reviewList);
+        model.addAttribute("reviews", reviewList);
+        model.addAttribute("like", reviewLikeList);
         return "/movieReview";
     }
 }

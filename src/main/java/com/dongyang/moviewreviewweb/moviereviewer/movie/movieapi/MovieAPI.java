@@ -102,7 +102,7 @@ public class MovieAPI {
         JsonNode moviesNode = root.path("results");
         String videosURL = null;
         for (JsonNode movieNode : moviesNode) {
-            if (!movieNode.path("site").asText().equals("YouTube"))
+            if (!movieNode.path("site").asText().equals("YouTube") || !movieNode.path("type").asText().equals("Trailer"))
                 continue;
             videosURL = "https://www.youtube.com/embed/" + movieNode.path("key").asText();
             break;

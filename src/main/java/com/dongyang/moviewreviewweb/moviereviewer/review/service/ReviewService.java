@@ -6,4 +6,5 @@ import java.util.List;
 
 public interface ReviewService {
     List<Review> getReviewByMovie (String movieId);
+    void saveReview (String movieId, String userId, String comment, float rating);
 }

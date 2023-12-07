@@ -34,7 +34,7 @@ public class SignController {
         }
         Log log = new Log("로그인", (String) httpSession.getAttribute("userId"));
         logDAO.create(log);
-        return "redirect:/";
+        return "redirect:" + httpSession.getAttribute("prevURL");
     }
     @PostMapping("/register-validate")
     public String register (Register register) throws SQLException, ClassNotFoundException {
