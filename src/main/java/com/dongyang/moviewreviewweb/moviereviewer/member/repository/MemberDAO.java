@@ -43,11 +43,11 @@ public class MemberDAO implements MemberRepository {
         return member;
     }
     @Override
-    public Optional<Member> findByUserName(String name) {
+    public Optional<Member> findByName(String name) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
         ResultSet rs;
-        String sql = "SELECT * FROM member WHERE userName = ?";
+        String sql = "SELECT * FROM member WHERE name = ?";
         Optional<Member> member = null;
         try {
             pstmt = connection.prepareStatement(sql);
@@ -70,7 +70,7 @@ public class MemberDAO implements MemberRepository {
     public boolean save(Register register) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
-        String sql = "INSERT INTO member(userName, id, pw) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO member(name, id, pw) VALUES (?, ?, ?)";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, register.getName());
@@ -213,7 +213,7 @@ public class MemberDAO implements MemberRepository {
     public void updateMemberNameByMemberId (String memberId, String newName) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
-        String sql = "UPDATE member SET userName = ? WHERE id = ?";
+        String sql = "UPDATE member SET name = ? WHERE id = ?";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, newName);

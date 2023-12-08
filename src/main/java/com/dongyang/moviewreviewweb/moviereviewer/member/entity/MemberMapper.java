@@ -10,7 +10,10 @@ public class MemberMapper {
     public static Member mapToEntity (ResultSet resultSet) {
         Member member = null;
         try {
-            member = new Member(resultSet.getString("userName"), resultSet.getString("id"), resultSet.getString("pw"), resultSet.getBoolean("status"));
+            member = new Member(resultSet.getString("name"),
+                    resultSet.getString("id"),
+                    resultSet.getString("pw"),
+                    resultSet.getBoolean("status"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

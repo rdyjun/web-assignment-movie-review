@@ -8,7 +8,7 @@ public class LogMapping {
     public static Log mapToLog (ResultSet rs) {
         Log log = null;
         try {
-            Timestamp dt = rs.getTimestamp("logDate");
+            Timestamp dt = rs.getTimestamp("log_date");
             String content = rs.getString("content");
             String author = rs.getString("author");
             log = new Log(dt, content, author);

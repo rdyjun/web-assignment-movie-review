@@ -6,10 +6,7 @@ import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.MovieList;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.movieapi.MovieAPI;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.service.MovieServiceImpl;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Review;
-import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReviewLike;
-import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReviewLikeCount;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewLikeService;
-import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewLikeServiceImpl;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpSession;
@@ -22,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
-import java.net.URI;
+import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -68,9 +65,10 @@ public class MovieController {
     }
     @RequestMapping("/movies/{id}")
     public String getMovieInfo (@PathVariable String id, HttpSession session, Model model) throws IOException {
-        String memberId = (String) session.getAttribute("userId");
+        String memberId = (String) session.getAttribute("memberId");
         Movie movie = movieService.getTargetMovie(id);
         List<Review> reviewList = reviewService.getReviewByMovie(id);
+        Collections.reverse(reviewList);
         Map<Long, Integer> likeCount = reviewLikeService.getLikeCount(id);
         Set<Long> reviewLikeList = reviewLikeService.getReviewLikeListByMovieIdAndMemberId(id, memberId);
         List<String> reviewMemberName = memberService.getMemberNameByReview(reviewList);

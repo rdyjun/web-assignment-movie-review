@@ -17,8 +17,8 @@ function offWriteBox () {
     reviewTitleBox.style.display = "flex";
 }
 
-function onWriteBox (userId) {
-    if (userId == null || userId == "") {
+function onWriteBox (memberId) {
+    if (memberId == null || memberId == "") {
         alert("로그인 후 다시시도해주세요");
         return;
     }

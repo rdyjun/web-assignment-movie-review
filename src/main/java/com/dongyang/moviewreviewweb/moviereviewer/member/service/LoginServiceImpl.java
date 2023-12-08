@@ -22,6 +22,6 @@ public class LoginServiceImpl implements LoginService {
             throw new NoSuchElementException("회원 정보가 존재하지 않습니다.");
         if (member.get().isStatus())
             throw new AccessDeniedException("접근이 거부된 계정입니다.");
-        httpSession.setAttribute("userId", loginData.getId());
+        httpSession.setAttribute("memberId", loginData.getId());
     }
 }

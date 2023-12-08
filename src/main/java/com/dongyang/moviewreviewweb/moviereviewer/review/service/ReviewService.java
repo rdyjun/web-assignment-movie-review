@@ -8,7 +8,7 @@ import java.util.Map;
 
 public interface ReviewService {
     List<Review> getReviewByMovie (String movieId);
-    void saveReview (String movieId, String userId, String comment, float rating);
+    void saveReview (String movieId, String memberId, String comment, float rating);
 
     Map<String, Double> getMovieVote(List<MovieList> movieList);
 

@@ -22,7 +22,7 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
         PreparedStatement pstmt;
         ResultSet rs;
         List<ReviewLike> reviewLikeList = new ArrayList<>();
-        String sql = "SELECT * FROM reviewlike WHERE movieId = ?";
+        String sql = "SELECT * FROM reviewlike WHERE movie_id = ?";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, movieId);
@@ -43,7 +43,7 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
         PreparedStatement pstmt;
         ResultSet rs;
         List<ReviewLike> reviewLikeList = new ArrayList<>();
-        String sql = "SELECT * FROM reviewlike WHERE movieId = ? AND memberId = ?";
+        String sql = "SELECT * FROM reviewlike WHERE movie_id = ? AND member_id = ?";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, movieId);
@@ -65,7 +65,7 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
         PreparedStatement pstmt;
         ResultSet rs;
         Optional<ReviewLike> reviewLikeList = Optional.empty();
-        String sql = "SELECT * FROM reviewlike WHERE memberId = ? and movieId = ? and reviewId = ?";
+        String sql = "SELECT * FROM reviewlike WHERE member_id = ? and movie_id = ? and review_id = ?";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, memberId);
@@ -86,7 +86,7 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
     public void save(String memberId, String movieId, long reviewId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
-        String sql = "INSERT INTO reviewlike (memberId, movieId, reviewId) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO reviewlike (member_id, movie_id, review_id) VALUES (?, ?, ?)";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, memberId);
@@ -103,7 +103,7 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
     public void remove(String memberId, String movieId, long reviewId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
-        String sql = "DELETE FROM reviewlike WHERE memberId = ? and movieId = ? and reviewId = ?;";
+        String sql = "DELETE FROM reviewlike WHERE member_id = ? and movie_id = ? and review_id = ?;";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, memberId);
@@ -122,13 +122,13 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
         PreparedStatement pstmt;
         ResultSet rs;
         Map<Long, Integer> reviewLikeCountList = new HashMap<>();
-        String sql = "SELECT reviewId, COUNT(*) as countLike FROM reviewlike WHERE movieId = ? GROUP BY reviewId";
+        String sql = "SELECT review_id, COUNT(*) as count_like FROM reviewlike WHERE movie_id = ? GROUP BY review_id";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, movieId);
             rs = pstmt.executeQuery();
             while (rs.next())
-                reviewLikeCountList.put(rs.getLong("reviewId"), rs.getInt("countLike"));
+                reviewLikeCountList.put(rs.getLong("review_id"), rs.getInt("count_like"));
             rs.close();
             pstmt.close();
             connection.close();
@@ -141,7 +141,7 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
     public void removeById(long reviewId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
-        String sql = "DELETE FROM reviewlike WHERE reviewId = ?;";
+        String sql = "DELETE FROM reviewlike WHERE review_id = ?;";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, reviewId);
@@ -158,13 +158,13 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
         PreparedStatement pstmt;
         ResultSet rs;
         int likeCount = 0;
-        String sql = "SELECT COUNT(*) as countLike FROM reviewlike WHERE reviewId = ?";
+        String sql = "SELECT COUNT(*) as count_like FROM reviewlike WHERE review_id = ?";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, reviewId);
             rs = pstmt.executeQuery();
             if (rs.next())
-                likeCount = rs.getInt("countLike");
+                likeCount = rs.getInt("count_like");
             rs.close();
             pstmt.close();
             connection.close();
@@ -179,7 +179,7 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
         PreparedStatement pstmt;
         ResultSet rs;
         List<ReviewLike> likeList = new ArrayList<>();
-        String sql = "SELECT * FROM reviewlike WHERE memberId = ?";
+        String sql = "SELECT * FROM reviewlike WHERE member_id = ?";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, memberId);
@@ -198,7 +198,7 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
     public void removeByMemberId (String memberId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
-        String sql = "DELETE FROM reviewlike WHERE memberId = ?;";
+        String sql = "DELETE FROM reviewlike WHERE member_id = ?;";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, memberId);

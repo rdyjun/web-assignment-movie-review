@@ -136,8 +136,12 @@ body {
 }
 .reportComment {
     flex: 2;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow:ellipsis;
 }
 .reportBlock {
+    text-align: center;
     flex: 0.5;
 }
 #log {

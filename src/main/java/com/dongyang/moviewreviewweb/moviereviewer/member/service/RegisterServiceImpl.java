@@ -11,16 +11,18 @@ public class RegisterServiceImpl implements RegisterService {
     private final MemberRepository memberRepository;
     @Override
     public void register(Register register) {
-        validateUserId(register.getId());
-        validateUserName(register.getName());
+        validateMemberId(register.getId());
+        validateMemberName(register.getName());
         memberRepository.save(register);
     }
-    public void validateUserName (String userName) {
-        if (memberRepository.findByUserName(userName).isPresent())
+    @Override
+    public void validateMemberName(String memberName) {
+        if (memberRepository.findByName(memberName).isPresent())
             throw new IllegalArgumentException("이미 존재하는 닉네임 입니다.");
     }
-    public void validateUserId (String userId) {
-        if (memberRepository.findById(userId).isPresent())
+    @Override
+    public void validateMemberId(String memberId) {
+        if (memberRepository.findById(memberId).isPresent())
             throw new IllegalArgumentException("이미 존재하는 아이디 입니다.");
     }
 }

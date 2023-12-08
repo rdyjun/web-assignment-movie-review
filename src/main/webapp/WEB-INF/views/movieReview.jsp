@@ -37,7 +37,7 @@
     <div id="reviews">
         <div id="reviewTitleBox">
             <p id="reviewTitle">리뷰</p>
-            <button id="reviewWrite" onclick="onWriteBox('${sessionScope.get('userId')}')">작성</button>
+            <button id="reviewWrite" onclick="onWriteBox('${sessionScope.get('memberId')}')">작성</button>
         </div>
         <form id="reviewWriteBox" method="post" action="/write-review" style="display:none">
             <input id="rating" name="rating" type="number" value="0" style="display:none">
@@ -49,7 +49,7 @@
                 </svg>
                 </c:forEach>
             </div>
-            <textarea id="reviewTextArea" placeholder="이곳에 리뷰를 작성해주세요." maxlength="50" value="" name="reviewComment"></textarea>
+            <textarea id="reviewTextArea" placeholder="이곳에 리뷰를 작성해주세요." maxlength="30" value="" name="reviewComment"></textarea>
             <div id="saveOrCancel">
                 <button id="cancelButton" onclick="cancel()" type="button">취소</button>
                 <button id="saveButton" type="submit">저장</button>
@@ -70,7 +70,7 @@
 
                     <p class="comment">${review.comment}</p>
                     <p class="date">${review.writeTime}</p>
-                    <form class="likeButtonBox" method="post" action="/like-review" onsubmit="return validateForm('${sessionScope.get('userId')}')">
+                    <form class="likeButtonBox" method="post" action="/like-review" onsubmit="return validateForm('${sessionScope.get('memberId')}')">
                         <input name="movieId" value="${movie.id}" type="hidden">
                         <input name="reviewId" value="${review.id}" type="hidden">
                         <button type="submit" >
@@ -85,13 +85,13 @@
                             more_vert
                         </span>
                         <div class="reviewMenu">
-                            <form class="reportReview" method="post" action="/report-review" onsubmit="return validateForm('${sessionScope.get('userId')}')">
-                                <input name="reporter" type="hidden" value="${sessionScope.get("userId")}">
+                            <form class="reportReview" method="post" action="/report-review" onsubmit="return validateForm('${sessionScope.get('memberId')}')">
+                                <input name="reporter" type="hidden" value="${sessionScope.get("memberId")}">
                                 <input name="reviewId" type="hidden" value="${review.id}">
                                 <button type="submit">신고</button>
                             </form>
-                            <form style="display: ${sessionScope.get("userId").equals(review.author) ? "block" : "none"}" class="removeReview" action="/delete-review" method="post" onsubmit="return validateForm('${sessionScope.get('userId')}')">
-                                <input name="author" type="hidden" value="${sessionScope.get("userId")}">
+                            <form style="display: ${sessionScope.get("memberId").equals(review.author) ? "block" : "none"}" class="removeReview" action="/delete-review" method="post" onsubmit="return validateForm('${sessionScope.get('memberId')}')">
+                                <input name="author" type="hidden" value="${sessionScope.get("memberId")}">
                                 <input name="reviewId" type="hidden" value="${review.id}">
                                 <button type="submit">삭제</button>
                             </form>

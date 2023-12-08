@@ -6,4 +6,8 @@ import java.sql.SQLException;
 
 public interface RegisterService {
     void register (Register register) throws SQLException, ClassNotFoundException;
+
+    void validateMemberName(String userName);
+
+    void validateMemberId(String memberId);
 }

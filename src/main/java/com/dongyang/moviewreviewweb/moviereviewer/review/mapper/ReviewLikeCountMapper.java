@@ -9,8 +9,8 @@ public class ReviewLikeCountMapper {
     public static ReviewLikeCount mapToEntity (ResultSet rs) {
         ReviewLikeCount reviewLikeCount = null;
         try {
-            reviewLikeCount = new ReviewLikeCount(rs.getLong("reviewId"),
-                    rs.getInt("countLike"));
+            reviewLikeCount = new ReviewLikeCount(rs.getLong("review_id"),
+                    rs.getInt("count_like"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

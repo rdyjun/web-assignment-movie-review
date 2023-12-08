@@ -30,12 +30,13 @@ public class adminController {
     private final ReviewLikeService reviewLikeService;
     @RequestMapping("/admin")
     public String admin (Model model, HttpSession httpSession) {
-        if (!httpSession.getAttribute("userId").equals("admin"))
+        if (!httpSession.getAttribute("memberId").equals("admin"))
             return "redirect:/";
         List<MemberFace> blackList = memberService.getBlackListMemberList();
         List<MemberFace> whiteList = memberService.getNoneBlackListMemberList();
         List<Log> logList = logDAO.getAllLog();
         List<Report> reportList = reportService.getAllReport();
+        Collections.reverse(reportList);
         List<ReportFace> reportFaceList = reportService.getAllReportComment(reportList);
         Collections.reverse(logList);
         model.addAttribute("blackList", blackList);
@@ -43,7 +44,7 @@ public class adminController {
         model.addAttribute("logList", logList);
         model.addAttribute("report", reportList);
         model.addAttribute("reportFace", reportFaceList);
-        Log log = new Log("어드민 페이지 접속", (String) httpSession.getAttribute("userId"));
+        Log log = new Log("어드민 페이지 접속", (String) httpSession.getAttribute("memberId"));
         logDAO.create(log);
         return "/admin";
     }

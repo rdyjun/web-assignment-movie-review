@@ -23,7 +23,7 @@
             </span>
         </button>
         <form id="modifyForm" action="/modify-name" method="post">
-            <input id="modifyInput" type="text" name="newName">
+            <input id="modifyInput" type="text" name="newName" maxlength="10">
             <button id="cancelButton" type="button" onclick="closeModify()">취소</button>
             <button id="saveButton" type="submit">저장</button>
         </form>
@@ -51,23 +51,23 @@
                     </div>
                     <p class="comment">${review.comment}</p>
                     <p class="date">${review.writeTime}</p>
-                    <form class="likeButtonBox" method="post" action="/like-review" onsubmit="return notInMyPage()">
+                    <form class="likeButtonBox" method="post" action="/like-review" onsubmit="return notInMyPage()" onclick="event.stopPropagation()">
                         <input name="movieId" value="../mypage" type="hidden">
                         <input name="reviewId" value="${review.id}" type="hidden">
-                        <button type="submit" >
+                        <button type="submit">
                         <span class="material-icons" style="color:${like.contains(review.id) ? "#9664FF" : "#888"}">
                             thumb_up
                         </span>
                             <p class="likeCount">${likeCount.getOrDefault(review.id, 0)}</p>
                         </button>
                     </form>
-                    <div class="reviewMenuBox">
+                    <div class="reviewMenuBox" onclick="event.stopPropagation()">
                         <span class="material-icons" onclick="showMenu(this)">
                             more_vert
                         </span>
                         <div class="reviewMenu">
-                            <form style="display: ${sessionScope.get("userId").equals(review.author) ? "block" : "none"}" class="removeReview" action="/delete-review" method="post" onsubmit="return validateForm('${sessionScope.get('userId')}')">
-                                <input name="author" type="hidden" value="${sessionScope.get("userId")}">
+                            <form style="display: ${sessionScope.get("memberId").equals(review.author) ? "block" : "none"}" class="removeReview" action="/delete-review" method="post" onsubmit="return validateForm('${sessionScope.get('memberId')}')">
+                                <input name="author" type="hidden" value="${sessionScope.memberId}">
                                 <input name="reviewId" type="hidden" value="${review.id}">
                                 <button type="submit">삭제</button>
                             </form>

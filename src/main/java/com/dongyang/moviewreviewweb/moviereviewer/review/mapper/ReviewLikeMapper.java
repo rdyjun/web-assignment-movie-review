@@ -10,9 +10,9 @@ public class ReviewLikeMapper {
         ReviewLike reviewLike = null;
         try {
             reviewLike = new ReviewLike(rs.getLong("id"),
-                    rs.getString("memberId"),
-                    rs.getLong("reviewId"),
-                    rs.getString("movieId"));
+                    rs.getString("member_id"),
+                    rs.getLong("review_id"),
+                    rs.getString("movie_id"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -24,10 +24,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.AccessDeniedException;
 import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.NoSuchElementException;
+import java.util.*;
 
 @Controller
 @RequiredArgsConstructor
@@ -43,12 +40,12 @@ public class SignController {
     @PostMapping("/login-validate")
     public String login (Login loginDTO, HttpSession httpSession) throws SQLException, ClassNotFoundException, AccessDeniedException {
         loginService.login(loginDTO, httpSession);
-        if (httpSession.getAttribute("userId") == null) {
+        if (httpSession.getAttribute("memberId") == null) {
             Log log = new Log("로그인 실패", loginDTO.getId());
             logDAO.create(log);
             return "redirect:/login";
         }
-        Log log = new Log("로그인", (String) httpSession.getAttribute("userId"));
+        Log log = new Log("로그인", (String) httpSession.getAttribute("memberId"));
         logDAO.create(log);
         String prevURL = (String) httpSession.getAttribute("prevURL");
         if (prevURL == null || prevURL.equals("/login") || prevURL.equals("/register"))
@@ -64,7 +61,7 @@ public class SignController {
     }
     @PostMapping("/delete-account")
     public String deleteAccount (HttpSession httpSession) throws SQLException, ClassNotFoundException {
-        String memberId = (String) httpSession.getAttribute("userId");
+        String memberId = (String) httpSession.getAttribute("memberId");
         deleteAccountService.deleteAccount(memberId);
         Log log = new Log("회원 탈퇴 (계정 삭제)", memberId);
         logDAO.create(log);
@@ -73,7 +70,7 @@ public class SignController {
     }
     @PostMapping("/logout")
     public String logout (HttpSession httpSession) {
-        Log log = new Log("로그아웃", (String) httpSession.getAttribute("userId"));
+        Log log = new Log("로그아웃", (String) httpSession.getAttribute("memberId"));
         logDAO.create(log);
         String prevURL = (String) httpSession.getAttribute("prevURL");
         httpSession.invalidate();
@@ -90,12 +87,13 @@ public class SignController {
         return e.getMessage() + "\n 페이지를 뒤로 이동해주세요";
     }
     @RequestMapping("/mypage")
-    public String getMovieInfo (HttpSession session, Model model) throws JsonProcessingException {
-        String memberId = (String) session.getAttribute("userId");
+    public String getMovieInfo (HttpSession session, Model model) {
+        String memberId = (String) session.getAttribute("memberId");
         if (memberId == null || memberId.equals(""))
             return "/";
         Member member = memberService.getMemberData(memberId);
         List<Review> reviewList = reviewService.getReviewByMemberId(memberId);
+        Collections.reverse(reviewList);
         Map<Long, Integer> reviewLikeList = new HashMap<>();
         for (Review review : reviewList)
             reviewLikeList.put(review.getId(), reviewLikeService.getReviewLikeByReviewId(review.getId()));

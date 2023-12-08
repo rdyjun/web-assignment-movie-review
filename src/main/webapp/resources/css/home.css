@@ -14,7 +14,8 @@ body {
     opacity: 0.6;
     background-repeat: no-repeat;
     background-size: cover;
-    background-position: center center; /* 가로 중앙, 세로 중앙 */
+    background-position: center center;
+    filter: brightness(50%);
 }
 #moviePosters {
     position: relative;

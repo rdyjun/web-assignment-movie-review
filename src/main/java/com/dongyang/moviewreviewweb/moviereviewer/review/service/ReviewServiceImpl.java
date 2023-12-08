@@ -21,9 +21,9 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewRepository.findByMovieId(movieId);
     }
     @Override
-    public void saveReview (String movieId, String userId, String comment, float rating) {
+    public void saveReview (String movieId, String memberId, String comment, float rating) {
         Timestamp date = Timestamp.valueOf(LocalDateTime.now());
-        Review review = new Review(rating, comment, userId, date, movieId);
+        Review review = new Review(rating, comment, memberId, date, movieId);
         reviewRepository.save(review);
     }
 

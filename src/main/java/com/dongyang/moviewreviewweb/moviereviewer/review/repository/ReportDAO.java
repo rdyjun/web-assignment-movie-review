@@ -41,7 +41,7 @@ public class ReportDAO implements ReportRepository {
     public void save(String reporter, long reviewId, Timestamp reportTime) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
-        String sql = "INSERT INTO report(reporter, reviewId, report_time) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO report(reporter, review_id, report_time) VALUES (?, ?, ?)";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, reporter);
@@ -60,7 +60,7 @@ public class ReportDAO implements ReportRepository {
         PreparedStatement pstmt;
         ResultSet rs;
         Optional<Report> report = Optional.empty();
-        String sql = "SELECT * FROM report WHERE reporter = ? AND reviewId = ?";
+        String sql = "SELECT * FROM report WHERE reporter = ? AND review_id = ?";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, reporterId);
@@ -80,7 +80,7 @@ public class ReportDAO implements ReportRepository {
     public void removeByReviewId(long reviewId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
-        String sql = "DELETE FROM report WHERE reviewId = ?;";
+        String sql = "DELETE FROM report WHERE review_id = ?;";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setLong(1, reviewId);

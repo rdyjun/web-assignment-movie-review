@@ -20,7 +20,7 @@ public class ReviewDAO implements ReviewRepository {
     public void save (Review review) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
-        String sql = "INSERT INTO review(writeTime, author, movieId, comment, rating) VALUES (?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO review(write_time, author, movie_id, comment, rating) VALUES (?, ?, ?, ?, ?)";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setTimestamp(1, review.getWriteTime());
@@ -79,7 +79,7 @@ public class ReviewDAO implements ReviewRepository {
         PreparedStatement pstmt;
         ResultSet rs;
         List<Review> review = new ArrayList<>();
-        String sql = "SELECT * FROM review WHERE movieId = ?";
+        String sql = "SELECT * FROM review WHERE movie_id = ?";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, movieId);
@@ -100,7 +100,7 @@ public class ReviewDAO implements ReviewRepository {
         PreparedStatement pstmt;
         ResultSet rs;
         List<Review> review = new ArrayList<>();
-        String sql = "SELECT * FROM review WHERE author = ? and movieId = ?";
+        String sql = "SELECT * FROM review WHERE author = ? and movie_id = ?";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, memberId);
@@ -122,7 +122,7 @@ public class ReviewDAO implements ReviewRepository {
         PreparedStatement pstmt;
         ResultSet rs;
         Double reviewVoteAverage = null;
-        String sql = "SELECT movieId, AVG(rating) as rating FROM review WHERE movieId = ?";
+        String sql = "SELECT movie_id, AVG(rating) as rating FROM review WHERE movie_id = ?";
         try {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, movieId);

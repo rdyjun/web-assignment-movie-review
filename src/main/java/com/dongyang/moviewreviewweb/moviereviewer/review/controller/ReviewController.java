@@ -25,7 +25,7 @@ public class ReviewController {
     private final LogDAO logDAO;
     @PostMapping("/write-review")
     public String writeReview (HttpSession session, float rating, String reviewComment, String movieId) {
-        String memberId = (String) session.getAttribute("userId");
+        String memberId = (String) session.getAttribute("memberId");
         reviewService.saveReview(movieId, memberId, reviewComment, rating);
         Log log = new Log("새로운 리뷰 작성 : 영화 ID = " + movieId, memberId);
         logDAO.create(log);
@@ -33,7 +33,7 @@ public class ReviewController {
     }
     @PostMapping("/like-review")
     public String likeReview (HttpSession session, String movieId, long reviewId) {
-        String memberId = (String)session.getAttribute("userId");
+        String memberId = (String)session.getAttribute("memberId");
         if (memberId == null)
             return "redirect:/movies/" + movieId;
         reviewLikeService.updateReviewLike(memberId, movieId, reviewId);
@@ -44,7 +44,8 @@ public class ReviewController {
     @PostMapping("/delete-review")
     public String deleteReview (HttpServletRequest request, HttpSession session, String author, long reviewId) {
         String referer = request.getHeader("Referer");
-        if (!session.getAttribute("userId").equals(author))
+        String memberId = (String) session.getAttribute("memberId");
+        if (!memberId.equals("admin") && !memberId.equals(author))
             return returnPage(referer);
         reportService.removeReport(reviewId);
         reviewLikeService.removeLike(reviewId);
@@ -56,7 +57,7 @@ public class ReviewController {
     @PostMapping("/report-review")
     public String reportReview (HttpServletRequest request, HttpSession session, String reporter, long reviewId) {
         String referer = request.getHeader("Referer");
-        if (session.getAttribute("userId") == null)
+        if (session.getAttribute("memberId") == null)
             return returnPage(referer);
         reportService.reportReview(reporter, reviewId);
         Log log = new Log("회원 신고: 신고 리뷰 ID = " + reviewId, reporter);

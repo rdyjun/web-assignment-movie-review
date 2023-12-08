@@ -13,8 +13,8 @@ public class ReviewMapper {
                     rs.getFloat("rating"),
                     rs.getString("comment"),
                     rs.getString("author"),
-                    rs.getTimestamp("writeTime"),
-                    rs.getString("movieId"));
+                    rs.getTimestamp("write_time"),
+                    rs.getString("movie_id"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

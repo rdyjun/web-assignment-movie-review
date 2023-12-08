@@ -17,7 +17,7 @@ public class LogDAO implements LogRepository {
     public boolean create(Log log) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
-        String sql = "INSERT INTO log (logDate, content, author) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO log (log_date, content, author) VALUES (?, ?, ?)";
         LocalDateTime now = LocalDateTime.now();
         Timestamp timestamp = Timestamp.valueOf(now);
         try {

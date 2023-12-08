@@ -19,9 +19,9 @@ public class MemberController {
     private final LogDAO logDAO;
     @RequestMapping("/modify-name")
     public String modifyName (HttpSession session, String newName) {
-        String memberId = (String) session.getAttribute("userId");
+        String memberId = (String) session.getAttribute("memberId");
         memberService.modifyMemberName(memberId, newName);
-        Log log = new Log("회원 이름 변경 : 회원 ID = " + memberId + " 바뀐 닉네임 = " + newName, memberId);
+        Log log = new Log("회원 이름 변경 : " + newName, memberId);
         logDAO.create(log);
         return "redirect:/mypage";
     }
