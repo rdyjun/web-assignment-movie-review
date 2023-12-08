@@ -1,13 +1,13 @@
 package com.dongyang.moviewreviewweb.moviereviewer.review.service;
 
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.*;
-import com.dongyang.moviewreviewweb.moviereviewer.review.repository.ReportDAO;
 import com.dongyang.moviewreviewweb.moviereviewer.review.repository.ReportRepository;
-import com.dongyang.moviewreviewweb.moviereviewer.review.repository.ReviewDAO;
 import com.dongyang.moviewreviewweb.moviereviewer.review.repository.ReviewRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -34,5 +34,19 @@ public class ReportServiceImpl implements ReportService {
             contentList.add(rf);
         }
         return contentList;
+    }
+    @Override
+    public void reportReview(String reporterId, long reviewId) {
+        validateReport(reporterId, reviewId);
+        reportRepository.save(reporterId, reviewId, Timestamp.valueOf(LocalDateTime.now()));
+    }
+    @Override
+    public void validateReport(String reportId, long reviewId) {
+        if (reportRepository.findByReporterIdAndReviewId(reportId, reviewId).isPresent())
+            throw new IllegalArgumentException("이미 신고하였습니다.");
+    }
+    @Override
+    public void removeReport (long reviewId) {
+        reportRepository.removeByReviewId(reviewId);
     }
 }

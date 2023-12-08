@@ -209,4 +209,20 @@ public class MemberDAO implements MemberRepository {
         }
         return false;
     }
+    @Override
+    public void updateMemberNameByMemberId (String memberId, String newName) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        String sql = "UPDATE member SET userName = ? WHERE id = ?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, newName);
+            pstmt.setString(2, memberId);
+            pstmt.executeUpdate();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

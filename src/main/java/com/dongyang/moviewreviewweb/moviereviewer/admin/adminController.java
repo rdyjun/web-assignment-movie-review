@@ -6,8 +6,10 @@ import com.dongyang.moviewreviewweb.moviereviewer.member.entity.MemberFace;
 import com.dongyang.moviewreviewweb.moviereviewer.member.service.MemberService;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Report;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReportFace;
+import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Review;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReportService;
-import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReportServiceImpl;
+import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewLikeService;
+import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -24,6 +26,8 @@ public class adminController {
     private final MemberService memberService;
     private final LogDAO logDAO;
     private final ReportService reportService;
+    private final ReviewService reviewService;
+    private final ReviewLikeService reviewLikeService;
     @RequestMapping("/admin")
     public String admin (Model model, HttpSession httpSession) {
         if (!httpSession.getAttribute("userId").equals("admin"))
@@ -46,6 +50,13 @@ public class adminController {
     @PostMapping("/blockMember")
     public String blockMember (String memberId) {
         memberService.reverseMemberStatus(memberId);
+        List<Review> reviewList = reviewService.getReviewByMemberId(memberId);
+        for (Review review : reviewList) {
+            long reviewId = review.getId();
+            reportService.removeReport(reviewId);
+            reviewLikeService.removeLike(reviewId);
+            reviewService.deleteReview(reviewId);
+        }
         Log log = new Log("회원 블락", memberId);
         logDAO.create(log);
         return "redirect:/admin";

@@ -15,4 +15,10 @@ public interface ReviewRepository {
     List<Review> findByMovieId(String movieId);
 
     List<Review> findByMemberIdAndMovieId(String memberId, String movieId);
+
+    Double averageByMovieId(String movieId);
+
+    List<Review> findByMemberId(String memberId);
+
+    void removeById(long reviewId);
 }

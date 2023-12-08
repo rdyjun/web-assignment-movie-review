@@ -10,9 +10,8 @@ public class ReportMapper {
         Report report = null;
         try {
             report = new Report(rs.getString("reporter"),
-                    rs.getString("movieId"),
                     rs.getString("reviewid"),
-                    rs.getTimestamp("reportTime"));
+                    rs.getTimestamp("report_time"));
         } catch (SQLException e) {
             e.printStackTrace();
         }

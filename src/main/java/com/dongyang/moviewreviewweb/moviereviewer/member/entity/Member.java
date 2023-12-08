@@ -1,26 +1,15 @@
 package com.dongyang.moviewreviewweb.moviereviewer.member.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+
+@Getter
+@AllArgsConstructor
+@NoArgsConstructor
 public class Member {
     private String name;
     private String id;
     private String pw;
     private boolean status;
-    public Member (String name, String id, String pw, boolean status) {
-        this.name = name;
-        this.id = id;
-        this.pw = pw;
-        this.status = status;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public boolean getStatus() {
-        return status;
-    }
 }

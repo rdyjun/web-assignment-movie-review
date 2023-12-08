@@ -43,7 +43,7 @@
                     person
                 </span>
                 <div id="myApps">
-                    <button onclick="location.href='/myPage'" id="linkToMyPage">마이페이지</button>
+                    <button onclick="location.href='/mypage'" id="linkToMyPage">마이페이지</button>
                     <form method="post" action="/logout">
                         <input type="submit" id="logout" value="로그아웃">
                     </form>

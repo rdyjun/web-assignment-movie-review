@@ -11,6 +11,7 @@
         var movieData = [
             <c:forEach var="movie" items="${movies}" varStatus="status">
             {
+                id: "${movie.id}",
                 title: "${movie.title}",
                 category: "${movie.category}",
                 runtime: "${movie.runtime}",
@@ -18,7 +19,8 @@
                 overView: "${movie.overView}",
                 voteAverage: "${movie.vote_average}",
                 voteCount: "${movie.vote_count}",
-                poster: "${movie.posterLink}"
+                poster: "${movie.posterLink}",
+                videosLink: "${movie.videosLink}"
             },
             <c:if test="${status.last}">,</c:if>
             </c:forEach>
@@ -31,10 +33,9 @@
     </div>
     <div id="movieInfo">
         <p id="movieCategory">Best & Popular<br>Movie</p>
-        <p id="movieNameKor" class="movieName">${movies.get(0).title}</p>
+        <span id="movieNameKor" class="movieName">${movies.get(0).title}</span>
         <div id="movieData">
             <p id="genre">장르 : ${movies.get(0).category}</p>
-            <p id="release">개봉일 : ${movies.get(0).releaseDate}</p>
             <p id="overView">내용 : ${movies.get(0).overView}</p>
         </div>
         <div id="simpleReview">
@@ -47,11 +48,11 @@
                 </p>
             </div>
             <div id="simpleShare">
-                <p id="voteInner" class="simpleNumber">
-
+                <p id="release" class="simpleNumber">
+                    ${movies.get(0).releaseDate}
                 </p>
                 <p class="simpleName">
-                    평점
+                    개봉일
                 </p>
             </div>
             <div id="simpleLike">
@@ -65,17 +66,17 @@
         </div>
         <div id="movieTrailerContent">
             <p id="movieTrailerTitle">Movie Trailer</p>
-            <iframe id="trailer" width="320" height="180" src="https://www.youtube.com/embed/-AZ7cnwn2YI?si=hqTEmbEOItH6AhqP" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe id="trailer" width="320" height="180" src="${movies.get(0).videosLink}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
         </div>
     </div>
     <div id="moviePosters">
-        <div>
+        <div onclick="location.href = '/movies/${movies.get(0).id}'">
             <img id="first" class="moviePosterContainer animate-focus" src="${movies.get(0).posterLink}">
         </div>
-        <div>
+        <div onclick="location.href = '/movies/${movies.get(1).id}'">
             <img id="second" class="moviePosterContainer animate-first" src="${movies.get(1).posterLink}">
         </div>
-        <div>
+        <div onclick="location.href = '/movies/${movies.get(2).id}'">
             <img id="third" class="moviePosterContainer animate-second" src="${movies.get(2).posterLink}">
         </div>
     </div>

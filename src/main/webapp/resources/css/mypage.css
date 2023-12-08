@@ -1,0 +1,13 @@
+#modifyName {
+    font-size: 36px;
+}
+#modifyInput {
+    font-size: 28px;
+    background-color: rgba(0, 0, 0, 0);
+    border: none;
+    border-bottom: 1px solid white;
+    color: #fff;
+}
+#modifyForm {
+    display: none;
+}

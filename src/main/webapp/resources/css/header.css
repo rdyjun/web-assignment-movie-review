@@ -24,6 +24,7 @@ a {
     font-size: 25px;
     font-family: 'Permanent Marker', cursive;
     color: #9664FF;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
 }
 #logo-menu {
     display: flex;
@@ -31,6 +32,7 @@ a {
 }
 #logo-menu button {
     font-family: 'Permanent Marker', cursive;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
 }
 #rightHeaderContent {
     display: flex;
@@ -64,6 +66,7 @@ a {
 #buttons > button {
     padding: 0 12px !important;
     font-size: 16px;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
 }
 #buttons > span {
     cursor: pointer;

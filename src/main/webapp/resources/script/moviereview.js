@@ -54,11 +54,14 @@ document.addEventListener('click', function(event) {
     });
 });
 
-function validateForm () {
-    let userId = sessionStorage.getItem("userId");
-    if (userId == null) {
+function validateForm (memberId) {
+    if (memberId == null || memberId == '') {
         alert("로그인 후 시도해주세요.");
         return false;
     }
     return true;
+}
+function notInMyPage () {
+    alert("마이페이지에서는 실행할 수 없습니다.");
+    return false;
 }

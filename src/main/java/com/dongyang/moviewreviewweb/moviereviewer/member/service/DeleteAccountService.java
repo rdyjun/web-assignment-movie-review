@@ -8,5 +8,5 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public interface DeleteAccountService {
-    void deleteAccount (HttpSession httpSession) throws SQLException, ClassNotFoundException;
+    void deleteAccount (String memberId) throws SQLException, ClassNotFoundException;
 }

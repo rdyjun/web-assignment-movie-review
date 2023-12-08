@@ -13,9 +13,8 @@ public class DeleteAccountServiceImpl implements DeleteAccountService {
     private final MemberRepository memberRepository;
     private final ReviewDAO reviewDAO;
     @Override
-    public void deleteAccount(HttpSession httpSession) {
-        String userId = (String) httpSession.getAttribute("userId");
-        memberRepository.removeById(userId);
-        reviewDAO.removeByMemberId(userId);
+    public void deleteAccount(String memberId) {
+        memberRepository.removeById(memberId);
+        reviewDAO.removeByMemberId(memberId);
     }
 }

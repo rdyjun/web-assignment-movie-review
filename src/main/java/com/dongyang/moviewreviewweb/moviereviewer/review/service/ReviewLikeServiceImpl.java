@@ -5,10 +5,7 @@ import com.dongyang.moviewreviewweb.moviereviewer.review.repository.ReviewLikeRe
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -37,5 +34,17 @@ public class ReviewLikeServiceImpl implements ReviewLikeService {
     @Override
     public Map<Long, Integer> getLikeCount(String movieId) {
         return reviewLikeRepository.countByMovieIdAndGroupByReviewId(movieId);
+    }
+    @Override
+    public void removeLike(long reviewId) {
+        reviewLikeRepository.removeById(reviewId);
+    }
+    @Override
+    public int getReviewLikeByReviewId(long reviewId) {
+        return reviewLikeRepository.findByReviewId(reviewId);
+    }
+    @Override
+    public List<ReviewLike> getReviewLikeByMemberId (String memberId) {
+        return reviewLikeRepository.findByMemberId(memberId);
     }
 }

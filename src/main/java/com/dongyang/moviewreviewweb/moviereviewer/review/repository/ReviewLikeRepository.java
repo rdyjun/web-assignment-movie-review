@@ -18,4 +18,10 @@ public interface ReviewLikeRepository {
     void remove(String memberId, String movieId, long reviewId);
 
     Map<Long, Integer> countByMovieIdAndGroupByReviewId(String movieId);
+
+    void removeById(long reviewId);
+
+    int findByReviewId(long reviewId);
+
+    List<ReviewLike> findByMemberId(String memberId);
 }

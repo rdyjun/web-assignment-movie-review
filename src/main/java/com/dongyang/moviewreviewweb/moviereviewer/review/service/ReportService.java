@@ -9,4 +9,10 @@ public interface ReportService {
     List<Report> getAllReport();
 
     List<ReportFace> getAllReportComment(List<Report> reportList);
+
+    void reportReview(String reporterId, long reviewId);
+
+    void validateReport(String reportId, long reviewId);
+
+    void removeReport(long reviewId);
 }

@@ -27,6 +27,7 @@ body {
     position: absolute;
     z-index: 10;
     top: 24%;
+    cursor: pointer;
 }
 .moviePosterContainer:nth-of-type(2) {
     left: 70%;
@@ -150,6 +151,8 @@ body {
     left: 50%;
     top: 15%;
     transform: translate(-50%, 0);
+    height:0;
+    pointer-events: none;
 }
 #movieCategory {
     position: relative;
@@ -159,12 +162,17 @@ body {
     font-style: normal;
     font-weight: 700;
     line-height: 120.6%;
+    width: 600px;
 }
 .movieName {
     position: relative;
     margin-top: 20px;
     font-size: 185%;
     font-weight: 700;
+}
+#movieNameKor {
+    max-width: 500px;
+    white-space: nowrap;
 }
 #movieNameKor::after {
     content: "";
@@ -188,19 +196,7 @@ body {
     line-height: 120.6%; /* 25.326px */
 }
 #movieData > p {
-    margin-top: 32px;
-}
-#movieCategory::after {
-    content: 'THE LATEST MOVIE';
-    position: absolute;
-    top: 0;
-    right: -100px;
-    color: #F00;
-    font-family: 'Racing Sans One', cursive !important;
-    font-size: 75%;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
+    margin-top: 20px;
 }
 #simpleReview {
     padding: 20px;
@@ -222,11 +218,38 @@ body {
 .simpleName {
     font-size: 125%;
 }
+#simpleShare {
+    text-align: center;
+}
 #simpleShare > .simpleNumber {
     color: #9664FF;
 }
 #simpleLike > .simpleNumber {
     color: #FF0000;
+}
+#watcher {
+    text-align: center;
+}
+#movieNameKor, #title, #genre, #release, #overView, #runtime, #voteOuter, #bg, #movieTrailerContent {
+    transition: all 0.5s ease-in-out;
+    color: white;
+    text-shadow: 4px 4px 4px rgba(0, 0, 0, 0.5);
+}
+#release {
+    text-align: center;
+}
+#voteOuter {
+    text-align: center;
+}
+#overView {
+    width: 600px;
+    height: 100px;
+    overflow: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+#overView::-webkit-scrollbar {
+    display: none;
 }
 #movieTrailerContent {
     position: absolute;
@@ -239,6 +262,8 @@ body {
     font-family: 'Permanent Marker', cursive;
 }
 #trailer {
+    pointer-events: initial;
     width: 320px;
     height: 180px;
+    box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
 }

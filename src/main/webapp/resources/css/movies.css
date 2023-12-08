@@ -51,7 +51,7 @@ body {
 .movieBox > p {
     white-space: nowrap;
     text-overflow: ellipsis;
-    width: 170px;
+    width: 180px;
     text-align: left;
     font-size: 18px;
     line-height: 40px;
@@ -65,5 +65,12 @@ body {
 }
 .moviePosterImage > img {
     height: 260px;
-    width: 170px;
+    width: 180px;
+}
+.reviewRating > path {
+    transform: translate(-5%, -5%);
+}
+#eachMoviesVote {
+    display: flex;
+    width: 180px;
 }

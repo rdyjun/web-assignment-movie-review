@@ -137,4 +137,61 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
         }
         return reviewLikeCountList;
     }
+    @Override
+    public void removeById(long reviewId) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        String sql = "DELETE FROM reviewlike WHERE reviewId = ?;";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, reviewId);
+            pstmt.executeUpdate();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    @Override
+    public int findByReviewId(long reviewId) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        ResultSet rs;
+        int likeCount = 0;
+        String sql = "SELECT COUNT(*) as countLike FROM reviewlike WHERE reviewId = ?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setLong(1, reviewId);
+            rs = pstmt.executeQuery();
+            if (rs.next())
+                likeCount = rs.getInt("countLike");
+            rs.close();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return likeCount;
+    }
+    @Override
+    public List<ReviewLike> findByMemberId (String memberId) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        ResultSet rs;
+        List<ReviewLike> likeList = new ArrayList<>();
+        String sql = "SELECT * FROM reviewlike WHERE memberId = ?";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, memberId);
+            rs = pstmt.executeQuery();
+            while (rs.next())
+                likeList.add(ReviewLikeMapper.mapToEntity(rs));
+            rs.close();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return likeList;
+    }
 }

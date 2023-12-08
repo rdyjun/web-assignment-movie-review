@@ -1,5 +1,6 @@
 package com.dongyang.moviewreviewweb.moviereviewer.movie.controller;
 
+import com.dongyang.moviewreviewweb.moviereviewer.member.service.MemberService;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.Movie;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.MovieList;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.movieapi.MovieAPI;
@@ -21,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import java.io.IOException;
+import java.net.URI;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -31,6 +33,7 @@ public class MovieController {
     private final MovieServiceImpl movieService;
     private final ReviewService reviewService;
     private final ReviewLikeService reviewLikeService;
+    private final MemberService memberService;
     @PostMapping("/test")
     public void test () {
         System.out.println("");
@@ -38,7 +41,9 @@ public class MovieController {
     @RequestMapping("/movies")
     public String getMovies (@RequestParam(value="sort", required = false) String sort, Model model) throws IOException {
         List<MovieList> mdto = movieService.getMovies(sort);
+        Map<String, Double> moviesVote = reviewService.getMovieVote(mdto);
         model.addAttribute("movies", mdto);
+        model.addAttribute("vote", moviesVote);
         return "movies";
     }
     @RequestMapping("/mbti-movies")
@@ -47,14 +52,18 @@ public class MovieController {
             mbti = "INFP"; // 기본
         String moviesJson = movieService.getMovieByMBTI(mbti);
         List<MovieList> mdto = MovieAPI.jsonConvertToMovieList(moviesJson);
+        Map<String, Double> moviesVote = reviewService.getMovieVote(mdto);
         model.addAttribute("movies", mdto);
+        model.addAttribute("vote", moviesVote);
         return "mbtiMovies";
     }
     @RequestMapping("/search")
     public String getSearchMovies (Model model, String searchValue) throws IOException {
         List<MovieList> movieList = movieService.getMovieByKeyword(searchValue);
+        Map<String, Double> moviesVote = reviewService.getMovieVote(movieList);
         model.addAttribute("movies", movieList);
         model.addAttribute("searchValue", searchValue);
+        model.addAttribute("vote", moviesVote);
         return "search";
     }
     @RequestMapping("/movies/{id}")
@@ -64,10 +73,12 @@ public class MovieController {
         List<Review> reviewList = reviewService.getReviewByMovie(id);
         Map<Long, Integer> likeCount = reviewLikeService.getLikeCount(id);
         Set<Long> reviewLikeList = reviewLikeService.getReviewLikeListByMovieIdAndMemberId(id, memberId);
+        List<String> reviewMemberName = memberService.getMemberNameByReview(reviewList);
         model.addAttribute("movie", movie);
         model.addAttribute("reviews", reviewList);
         model.addAttribute("like", reviewLikeList);
         model.addAttribute("likeCount", likeCount);
+        model.addAttribute("reviewName", reviewMemberName);
         return "/movieReview";
     }
     @RequestMapping("/")

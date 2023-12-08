@@ -10,7 +10,7 @@
 </head>
 <body>
 <form id="registerBox" action="/register-validate" method="post">
-    <p id="printWelcome">TALK FILM</p>
+    <p id="printWelcome" style="cursor: pointer" onclick="location.href='/'">TALK FILM</p>
 
     <p id="registerTitle">Sign Up</p>
     <p id="registerHint">계정이 이미 있는 경우<br>이곳으로 <a href="/login">로그인</a> 하세요</p>

@@ -169,20 +169,21 @@ body {
 .reviewMenu {
     position: absolute;
     width: 100px;
-    height: 100px;
     background-color: #fff;
     box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.5);
     display: none;
+    z-index: 5;
+    cursor: pointer;
 }
-.reviewMenu > button {
-    width: 100%;
-    height: 50%;
-    color: black;
-}
-.reviewMenu > button:hover {
+.reviewMenu > form:hover > button{
     transition: 0.3s;
     background-color: #9664FF;
     color: #fff;
+}
+.reviewMenu button {
+    width: 100px;
+    height: 50px;
+    color: black;
 }
 .likeCount {
     color: #000;

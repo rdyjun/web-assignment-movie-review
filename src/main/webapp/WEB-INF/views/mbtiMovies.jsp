@@ -46,6 +46,15 @@
                     <img src="${movie.posterLink}">
                 </div>
                 <p class="movieTitle">${movie.title}</p>
+                <div id="eachMoviesVote">
+                    <c:forEach var="i" begin="1" end="5" step="1" varStatus="status">
+                        <c:set var="fillPercent" value="${((vote.get(String.valueOf(movie.id)) * 100) - ((i - 1) * 100.0))}" />
+                        <c:set var="purpleColor" value="${fillPercent >= 100.0 ? 100 : fillPercent < 0 ? 0 : fillPercent}" />
+                        <svg class="reviewRating" fill="#9664FF" display="${purpleColor <= 0 ? 'none' : 'block'}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 22 22">
+                            <path d="M12 2.5l2.405 7.385h7.795l-6.305 4.573 2.405 7.387-6.305-4.572-6.305 4.572 2.405-7.387-6.305-4.573h7.795z"/>
+                        </svg>
+                    </c:forEach>
+                </div>
             </div>
         </c:forEach>
     </div>

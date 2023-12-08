@@ -17,4 +17,6 @@ public interface MemberRepository {
     List<Member> findByBlackList (boolean status);
     void updateBlockByIdAndStatus (String id, boolean status);
     boolean findByIdAtStatus (String memberId);
+
+    void updateMemberNameByMemberId(String memberId, String newName);
 }
