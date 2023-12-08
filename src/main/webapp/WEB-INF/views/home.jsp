@@ -17,7 +17,8 @@
                 releaseDate: "${movie.releaseDate}",
                 overView: "${movie.overView}",
                 voteAverage: "${movie.vote_average}",
-                voteCount: "${movie.vote_count}"
+                voteCount: "${movie.vote_count}",
+                poster: "${movie.posterLink}"
             },
             <c:if test="${status.last}">,</c:if>
             </c:forEach>
@@ -25,38 +26,40 @@
     </script>
 </head>
 <body>
+    <div id="bg">
+
+    </div>
     <div id="movieInfo">
         <p id="movieCategory">Best & Popular<br>Movie</p>
-        <p id="movieNameKor" class="movieName"></p>
-        <p id="movieNameEng" class="movieName">Spring in Seoul</p>
+        <p id="movieNameKor" class="movieName">${movies.get(0).title}</p>
         <div id="movieData">
-            <p>감독 : </p>
-            <p>장르 : </p>
-            <p>등급 : </p>
+            <p id="genre">장르 : ${movies.get(0).category}</p>
+            <p id="release">개봉일 : ${movies.get(0).releaseDate}</p>
+            <p id="overView">내용 : ${movies.get(0).overView}</p>
         </div>
         <div id="simpleReview">
             <div id="watcher">
-                <p class="simpleNumber">
-                    13.6k
+                <p id="runtime" class="simpleNumber">
+                    ${movies.get(0).runtime}분
                 </p>
                 <p class="simpleName">
-                    관객 수
+                    런타임
                 </p>
             </div>
             <div id="simpleShare">
-                <p class="simpleNumber">
-                    12.2k
+                <p id="voteInner" class="simpleNumber">
+
                 </p>
                 <p class="simpleName">
-                    공유
+                    평점
                 </p>
             </div>
             <div id="simpleLike">
-                <p class="simpleNumber">
-                    20.4k
+                <p id="voteOuter" class="simpleNumber">
+                    ${movies.get(0).vote_average}
                 </p>
                 <p class="simpleName">
-                    좋아요
+                    외부평점
                 </p>
             </div>
         </div>
