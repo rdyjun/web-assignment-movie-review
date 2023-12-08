@@ -39,9 +39,9 @@
         </div>
         <p id="reviewNotFound" style="display: ${reviews.size() == 0 ? "block" : "none"}">작성한 리뷰가 없습니다.</p>
         <div id="reviewList">
-            <c:forEach var="review" items="${reviews}">
-                <div class="movieBox">
-                    <p class="reviewAuthor">${review.author}</p>
+            <c:forEach var="review" items="${reviews}" varStatus="sts">
+                <div class="movieBox" onclick="location.href='/movies/${review.movieId}'" style="cursor: pointer">
+                    <p class="reviewAuthor">${reviewMovieTitle.get(sts.index)}</p>
                     <div class="stars">
                         <c:forEach var="i" begin="1" end="5" step="1" varStatus="status">
                             <svg class="reviewRating" fill="${review.rating >= i ? "#9664FF" : "#888888"}" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20">

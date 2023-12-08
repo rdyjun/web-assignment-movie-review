@@ -127,7 +127,7 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
             pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, movieId);
             rs = pstmt.executeQuery();
-            if (rs.next())
+            while (rs.next())
                 reviewLikeCountList.put(rs.getLong("reviewId"), rs.getInt("countLike"));
             rs.close();
             pstmt.close();
@@ -174,7 +174,7 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
         return likeCount;
     }
     @Override
-    public List<ReviewLike> findByMemberId (String memberId) {
+    public List<ReviewLike> findByMemberId(String memberId) {
         Connection connection = dbConnector.getConnect();
         PreparedStatement pstmt;
         ResultSet rs;
@@ -193,5 +193,20 @@ public class ReviewLikeDAO implements ReviewLikeRepository {
             e.printStackTrace();
         }
         return likeList;
+    }
+    @Override
+    public void removeByMemberId (String memberId) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        String sql = "DELETE FROM reviewlike WHERE memberId = ?;";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, memberId);
+            pstmt.executeUpdate();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

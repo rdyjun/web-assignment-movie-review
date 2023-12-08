@@ -91,4 +91,19 @@ public class ReportDAO implements ReportRepository {
             e.printStackTrace();
         }
     }
+    @Override
+    public void removeByReporterId(String memberId) {
+        Connection connection = dbConnector.getConnect();
+        PreparedStatement pstmt;
+        String sql = "DELETE FROM report WHERE reporter = ?;";
+        try {
+            pstmt = connection.prepareStatement(sql);
+            pstmt.setString(1, memberId);
+            pstmt.executeUpdate();
+            pstmt.close();
+            connection.close();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

@@ -9,12 +9,12 @@ import com.dongyang.moviewreviewweb.moviereviewer.member.service.DeleteAccountSe
 import com.dongyang.moviewreviewweb.moviereviewer.member.service.LoginService;
 import com.dongyang.moviewreviewweb.moviereviewer.member.service.MemberService;
 import com.dongyang.moviewreviewweb.moviereviewer.member.service.RegisterService;
-import com.dongyang.moviewreviewweb.moviereviewer.movie.entity.Movie;
 import com.dongyang.moviewreviewweb.moviereviewer.movie.service.MovieService;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.Review;
 import com.dongyang.moviewreviewweb.moviereviewer.review.entity.ReviewLike;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewLikeService;
 import com.dongyang.moviewreviewweb.moviereviewer.review.service.ReviewService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -22,10 +22,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
 import java.nio.file.AccessDeniedException;
 import java.sql.SQLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Controller
 @RequiredArgsConstructor
@@ -54,7 +56,7 @@ public class SignController {
         return "redirect:" + prevURL;
     }
     @PostMapping("/register-validate")
-    public String register (HttpSession session, Register register) throws SQLException, ClassNotFoundException {
+    public String register (Register register) throws SQLException, ClassNotFoundException {
         registerService.register(register);
         Log log = new Log("회원가입", register.getId());
         logDAO.create(log);
@@ -88,7 +90,7 @@ public class SignController {
         return e.getMessage() + "\n 페이지를 뒤로 이동해주세요";
     }
     @RequestMapping("/mypage")
-    public String getMovieInfo (HttpSession session, Model model) {
+    public String getMovieInfo (HttpSession session, Model model) throws JsonProcessingException {
         String memberId = (String) session.getAttribute("userId");
         if (memberId == null || memberId.equals(""))
             return "/";
@@ -101,10 +103,19 @@ public class SignController {
         List<Long> myLikeListAtId = myLikeList.stream()
                 .map(v -> v.getReviewId())
                 .toList();
+        List<String> reviewMovieName = reviewList.stream()
+                .map(v -> {
+                    try {
+                        return movieService.getTargetMovie(v.getMovieId()).getTitle();
+                    } catch (JsonProcessingException e) {
+                        throw new RuntimeException(e);
+                    }
+                }).toList();
         model.addAttribute("member", member);
         model.addAttribute("reviews", reviewList);
         model.addAttribute("likeCount", reviewLikeList);
         model.addAttribute("like", myLikeListAtId);
+        model.addAttribute("reviewMovieTitle", reviewMovieName);
         return "/mypage";
     }
 }

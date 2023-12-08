@@ -11,3 +11,7 @@
 #modifyForm {
     display: none;
 }
+.reviewAuthor {
+    overflow: hidden;
+    white-space: nowrap;
+}

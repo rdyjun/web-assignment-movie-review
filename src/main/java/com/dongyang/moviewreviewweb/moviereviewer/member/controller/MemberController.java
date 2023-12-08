@@ -21,7 +21,6 @@ public class MemberController {
     public String modifyName (HttpSession session, String newName) {
         String memberId = (String) session.getAttribute("userId");
         memberService.modifyMemberName(memberId, newName);
-        session.setAttribute("userId", newName);
         Log log = new Log("회원 이름 변경 : 회원 ID = " + memberId + " 바뀐 닉네임 = " + newName, memberId);
         logDAO.create(log);
         return "redirect:/mypage";

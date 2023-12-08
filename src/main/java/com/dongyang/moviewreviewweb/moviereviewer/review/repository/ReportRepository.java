@@ -13,4 +13,6 @@ public interface ReportRepository {
     Optional<Report> findByReporterIdAndReviewId(String reporterId, long reviewId);
 
     void removeByReviewId(long reviewId);
+
+    void removeByReporterId(String memberId);
 }

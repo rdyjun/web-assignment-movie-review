@@ -40,7 +40,7 @@ public class ReviewServiceImpl implements ReviewService {
         return reviewRepository.findByMemberId(memberId);
     }
     @Override
-    public void deleteReview (long reviewId) {
+    public void deleteReview(long reviewId) {
         reviewRepository.removeById(reviewId);
     }
 }

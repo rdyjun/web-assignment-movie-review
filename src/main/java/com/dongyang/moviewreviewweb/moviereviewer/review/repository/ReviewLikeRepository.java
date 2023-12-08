@@ -24,4 +24,6 @@ public interface ReviewLikeRepository {
     int findByReviewId(long reviewId);
 
     List<ReviewLike> findByMemberId(String memberId);
+
+    void removeByMemberId(String memberId);
 }
