@@ -17,6 +17,19 @@ body {
     background-position: center center;
     filter: brightness(50%);
 }
+#movieInfo::after {
+    content: 'MORE MOVIES';
+    position: absolute;
+    top: 0;
+    right: 0;
+    color: #F00;
+    font-family: 'Racing Sans One', cursive !important;
+    font-size: 250%;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-top: 16px;
+}
 #moviePosters {
     position: relative;
     top: 0;
@@ -147,6 +160,7 @@ body {
 }
 #movieInfo {
     width: 1400px;
+    height: 200px;
     position: absolute;
     z-index: 101;
     left: 50%;

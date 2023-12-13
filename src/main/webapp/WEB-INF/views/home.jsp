@@ -57,7 +57,7 @@
             </div>
             <div id="simpleLike">
                 <p id="voteOuter" class="simpleNumber">
-                    ${movies.get(0).vote_average}
+                    ${String.valueOf(movies.get(0).vote_average).substring(0, 3)}
                 </p>
                 <p class="simpleName">
                     외부평점
