@@ -9,7 +9,7 @@
     <script src="../resources/script/register.js" defer="defer"></script>
 </head>
 <body>
-<form id="registerBox" action="/register-validate" method="post">
+<form id="registerBox" action="/register-validate" method="post" onsubmit="return validateInputValue()">
     <p id="printWelcome" style="cursor: pointer" onclick="location.href='/'">TALK FILM</p>
 
     <p id="registerTitle">Sign Up</p>

@@ -51,7 +51,7 @@
             </div>
             <textarea id="reviewTextArea" placeholder="이곳에 리뷰를 작성해주세요." maxlength="60" value="" name="reviewComment"></textarea>
             <div id="saveOrCancel">
-                <button id="cancelButton" onclick="cancel()" type="button">취소</button>
+                <button id= "cancelButton" onclick="cancel()" type="button">취소</button>
                 <button id="saveButton" type="submit">저장</button>
             </div>
         </form>

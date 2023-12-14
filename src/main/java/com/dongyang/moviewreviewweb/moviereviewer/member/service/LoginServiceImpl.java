@@ -5,6 +5,7 @@ import com.dongyang.moviewreviewweb.moviereviewer.member.entity.Member;
 import com.dongyang.moviewreviewweb.moviereviewer.member.repository.MemberRepository;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.apache.logging.log4j.core.config.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.nio.file.AccessDeniedException;

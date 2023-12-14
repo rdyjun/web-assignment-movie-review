@@ -21,7 +21,6 @@ function togglePasswordInvisibility(id) {
 }
 
 function validatePassword () {
-    console.log("111");
     if (pw.value == pwConfirm.value) {
         pwHint.style.color = "green";
         pwConfirm.style.borderColor = "green";
@@ -35,7 +34,7 @@ function validatePassword () {
 }
 form.addEventListener('input', validateInputValue)
 function validateInputValue () {
-    if (form.checkValidity() && pw.value === pwConfirm.value) {
+    if (form.checkValidity() && pw.value === pwConfirm.value && isVerified) {
         submitButton.disabled = false;
     } else {
         submitButton.disabled = true;
@@ -43,10 +42,12 @@ function validateInputValue () {
 }
 
 verifyButton.addEventListener('click', function() {
+    alert("인증 메일이 발송되었습니다.");
+    validateDuring()
+    startTimer();
     if (isSend)
         alert("잘못된 접근입니다.");
     var email = document.getElementById('email').value;
-    console.log(email);
 
     fetch('/register/mailConfirm', {
         method: 'POST',
@@ -60,24 +61,21 @@ verifyButton.addEventListener('click', function() {
                 throw new Error('Network response was not ok');
         })
         .then(data => {
-            alert("인증 메일이 발송되었습니다.");
-            verifiedBlock.style.display = 'flex';
-            verifyButton.disabled = 'true';
-            verifyButton.style.cursor = 'default';
-            verifyButton.style.backgroundColor = "#888";
-            startTimer();
+
         })
         .catch((error) => {
+            validateBefore()
             // 에러 메시지 출력
             alert('메일이 이미 존재하거나, 올바르지 않습니다.' + error);
+            clearInterval(intervalId);
         });
 });
 
 verifyEmailButton.addEventListener('click', function() {
     if (isVerified)
         alert("잘못된 접근입니다.");
-    let email = document.getElementById('email').value;
-    let key = document.getElementById("verifiedKey").value;
+    let email = document.getElementById('email');
+    let key = document.getElementById("verifiedKey");
 
     fetch('/register/mailCertify', {
         method: 'POST',
@@ -85,8 +83,8 @@ verifyEmailButton.addEventListener('click', function() {
             'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-            email: email,
-            verify_key: key
+            email: email.value,
+            key: key.value
         }),
     })
         .then(response => {
@@ -99,10 +97,15 @@ verifyEmailButton.addEventListener('click', function() {
             verifyButton.disabled = true;
             verifyEmailButton.disabled = true;
             verifyEmailButton.style.backgroundColor = "#888";
+            key.readOnly = true;
+            email.readOnly = true;
+            isVerified = true;
+            verifyButton.textContent = '인증 완료';
+            validateInputValue();
         })
         .catch((error) => {
             // 에러 메시지 출력
-            alert('인증번호가 올바르지 않습니다. 다시 시도해주세요.' + error);
+            alert('인증번호가 올바르지 않습니다. 다시 시도해주세요.\n' + error);
         });
 });
 
@@ -139,4 +142,17 @@ function startTimer() {
             verifyButton.style.backgroundColor = "#9664FF";
         }
     }, 1000);
+}
+
+function validateDuring () {
+    verifiedBlock.style.display = 'flex';
+    verifyButton.disabled = 'true';
+    verifyButton.style.cursor = 'default';
+    verifyButton.style.backgroundColor = "#888";
+}
+function validateBefore () {
+    verifiedBlock.style.display = 'none';
+    verifyButton.disabled = 'false';
+    verifyButton.style.cursor = 'pointer';
+    verifyButton.style.backgroundColor = "#9664FF";
 }

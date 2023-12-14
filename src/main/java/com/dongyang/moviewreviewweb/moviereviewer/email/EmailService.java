@@ -18,4 +18,6 @@ public interface EmailService {
     void validateAuthorizationKey(String email, String key);
 
     void deleteVerificatedScheduler(String email);
+
+    void deleteAlreadyData(String email);
 }

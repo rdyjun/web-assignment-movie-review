@@ -124,3 +124,10 @@ body {
     gap: 24px;
     display: none;
 }
+#verifiedKey:read-only, #email:read-only {
+    background-color: #A7a7a7;
+    cursor: default;
+}
+#verifiedKey:read-only:focus, #email:read-only:focus {
+    outline: none;
+}

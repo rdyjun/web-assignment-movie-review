@@ -3,6 +3,7 @@ package com.dongyang.moviewreviewweb.moviereviewer.member.controller;
 import com.dongyang.moviewreviewweb.moviereviewer.email.EmailService;
 import com.dongyang.moviewreviewweb.moviereviewer.email.Issued;
 import jakarta.mail.MessagingException;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,12 +20,12 @@ public class EmailVerifiedController {
     @PostMapping("/register/mailConfirm")
     public ResponseEntity mailConfirm(@RequestBody Issued issued) throws MessagingException, UnsupportedEncodingException {
         emailService.sendEmail(issued.getEmail());
-
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping("/register/mailCertify")
-    public ResponseEntity verfication (@RequestBody Issued issued) {
+    public ResponseEntity verfication (@RequestBody Issued issued, HttpSession session) {
         emailService.validateAuthorizationKey(issued.getEmail(), issued.getKey());
+        session.setAttribute("verification", issued.getKey());
         return new ResponseEntity<>(HttpStatus.OK);
     }
     @PostMapping("/register/deleteCertify")

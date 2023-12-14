@@ -38,7 +38,6 @@ public class SignController {
     private final ReviewLikeService reviewLikeService;
     private final ReviewService reviewService;
     private final MemberService memberService;
-    private final EmailService emailService;
     @PostMapping("/login-validate")
     public String login (Login loginDTO, HttpSession httpSession) throws SQLException, ClassNotFoundException, AccessDeniedException {
         loginService.login(loginDTO, httpSession);
@@ -55,10 +54,13 @@ public class SignController {
         return "redirect:" + prevURL;
     }
     @PostMapping("/register-validate")
-    public String register (Register register) throws SQLException, ClassNotFoundException {
+    public String register (Register register, HttpSession session) throws SQLException, ClassNotFoundException {
+        if (session.getAttribute("verification") == null)
+            throw new IllegalArgumentException("이메일 인증 정보가 존재하지 않습니다.");
         registerService.register(register);
         Log log = new Log("회원가입", register.getId());
         logDAO.create(log);
+        session.invalidate();
         return "redirect:/";
     }
     @PostMapping("/delete-account")

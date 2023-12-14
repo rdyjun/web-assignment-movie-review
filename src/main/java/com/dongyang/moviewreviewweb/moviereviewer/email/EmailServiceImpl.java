@@ -4,8 +4,11 @@ import com.dongyang.moviewreviewweb.moviereviewer.member.service.RegisterService
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -62,20 +65,34 @@ public class EmailServiceImpl implements EmailService {
         SimpleMailMessage simpleMailMessage = createEmailForm(toEmail);
         //실제 메일 전송
         emailSender.send(simpleMailMessage);
-        verificationRepository.save(new Verification(toEmail, authNum));
+        deleteAlreadyData(toEmail);
+        Timestamp duration = Timestamp.valueOf(LocalDateTime.now().plusMinutes(5));
+        verificationRepository.save(new Verification(toEmail, authNum, duration));
         return authNum; //인증 코드 반환
     }
     @Override
     public void validateAuthorizationKey(String email, String key) {
-        Optional<Verification> AuthorizationData = verificationRepository.findById(email);
-        if (AuthorizationData.isEmpty())
+        removeExpiredVerification();
+        Optional<Verification> authorizationData = verificationRepository.findById(email);
+        if (authorizationData.isEmpty())
             throw new IllegalArgumentException("인증정보가 존재하지 않습니다.");
-        if (!AuthorizationData.get().isCertified(key))
+        Verification authorization = authorizationData.get();
+        if (!authorization.isCertified(key))
             throw new IllegalArgumentException("인증키가 올바르지 않습니다.");
         verificationRepository.deleteById(email);
     }
     @Override
     public void deleteVerificatedScheduler (String email) {
         verificationRepository.deleteById(email);
+    }
+    public void removeExpiredVerification () {
+        Timestamp now = Timestamp.valueOf(LocalDateTime.now());
+        verificationRepository.deleteAllBeforeTimestamp(now);
+    }
+    @Override
+    public void deleteAlreadyData (String email) {
+        Optional<Verification> v = verificationRepository.findById(email);
+        if (v.isPresent())
+            verificationRepository.deleteById(email);
     }
 }
