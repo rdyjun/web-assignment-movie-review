@@ -9,6 +9,8 @@ let verifiedBlock = document.getElementById('verifiedBlock');
 let intervalId = null;
 let isSend = false;
 let isVerified = false;
+let email = document.getElementById('email');
+let key = document.getElementById("verifiedKey");
 
 function togglePasswordVisibility(id) {
     var passwordInput = document.getElementById(id);
@@ -74,8 +76,6 @@ verifyButton.addEventListener('click', function() {
 verifyEmailButton.addEventListener('click', function() {
     if (isVerified)
         alert("잘못된 접근입니다.");
-    let email = document.getElementById('email');
-    let key = document.getElementById("verifiedKey");
 
     fetch('/register/mailCertify', {
         method: 'POST',
@@ -96,7 +96,7 @@ verifyEmailButton.addEventListener('click', function() {
             clearInterval(intervalId);
             verifyButton.disabled = true;
             verifyEmailButton.disabled = true;
-            verifyEmailButton.style.backgroundColor = "#888";
+            verifyEmailButton.style.backgroundColor = "#a7a7a7";
             key.readOnly = true;
             isVerified = true;
             verifyButton.textContent = '인증 완료';
@@ -115,7 +115,7 @@ function startTimer() {
         clearInterval(intervalId);
     }
 
-    var totalSeconds = 5 * 60;  // 5분을 초로 변환
+    var totalSeconds = 5 * 60;
 
     intervalId = setInterval(function() {
         var minutes = Math.floor(totalSeconds / 60);
@@ -132,11 +132,8 @@ function startTimer() {
         // 00:00이 되면 타이머 중지
         if (totalSeconds < 0) {
             clearInterval(intervalId);
-            verifyButton.textContent = '인증번호 발급';
+            validateBefore();
             intervalId = null;
-            verifyButton.disabled = 'false';
-            verifyEmailButton.style.display = 'block';
-            verifiedBlock.style.display = 'none';
             verifyButton.style.cursor = 'pointer';
             verifyButton.style.backgroundColor = "#9664FF";
         }
@@ -147,12 +144,16 @@ function validateDuring () {
     verifiedBlock.style.display = 'flex';
     verifyButton.disabled = true;
     verifyButton.style.cursor = 'default';
-    verifyButton.style.backgroundColor = "#888";
+    verifyButton.style.backgroundColor = "#a7a7a7";
+    email.style.backgroundColor = '#a7a7a7';
     email.readOnly = true;
 }
 function validateBefore () {
+    verifyButton.textContent = '인증번호 발급';
     verifiedBlock.style.display = 'none';
     verifyButton.disabled = false;
     verifyButton.style.cursor = 'pointer';
     verifyButton.style.backgroundColor = "#9664FF";
+    email.style.backgroundColor = '#fff';
+    email.readOnly = false;
 }

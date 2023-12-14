@@ -2,7 +2,6 @@ package com.dongyang.moviewreviewweb.moviereviewer.member.controller;
 
 import com.dongyang.moviewreviewweb.moviereviewer.email.EmailService;
 import com.dongyang.moviewreviewweb.moviereviewer.email.Issued;
-import jakarta.mail.MessagingException;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.io.UnsupportedEncodingException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
@@ -20,7 +18,7 @@ import java.time.LocalDateTime;
 public class EmailVerifiedController {
     private final EmailService emailService;
     @PostMapping("/register/mailConfirm")
-    public ResponseEntity mailConfirm(@RequestBody Issued issued, HttpSession session) throws MessagingException, UnsupportedEncodingException {
+    public ResponseEntity mailConfirm(@RequestBody Issued issued, HttpSession session) {
         String key = emailService.sendEmail(issued.getEmail());
         session.setAttribute("key", key);
         Timestamp duration = Timestamp.valueOf(LocalDateTime.now().plusMinutes(5));
