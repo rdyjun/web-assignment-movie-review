@@ -130,4 +130,5 @@ body {
 }
 #verifiedKey:read-only:focus, #email:read-only:focus {
     outline: none;
+    color: #000;
 }

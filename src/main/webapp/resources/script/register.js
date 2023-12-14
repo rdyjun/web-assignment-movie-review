@@ -98,7 +98,6 @@ verifyEmailButton.addEventListener('click', function() {
             verifyEmailButton.disabled = true;
             verifyEmailButton.style.backgroundColor = "#888";
             key.readOnly = true;
-            email.readOnly = true;
             isVerified = true;
             verifyButton.textContent = '인증 완료';
             validateInputValue();
@@ -146,13 +145,14 @@ function startTimer() {
 
 function validateDuring () {
     verifiedBlock.style.display = 'flex';
-    verifyButton.disabled = 'true';
+    verifyButton.disabled = true;
     verifyButton.style.cursor = 'default';
     verifyButton.style.backgroundColor = "#888";
+    email.readOnly = true;
 }
 function validateBefore () {
     verifiedBlock.style.display = 'none';
-    verifyButton.disabled = 'false';
+    verifyButton.disabled = false;
     verifyButton.style.cursor = 'pointer';
     verifyButton.style.backgroundColor = "#9664FF";
 }

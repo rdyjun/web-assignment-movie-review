@@ -1,15 +1,14 @@
 package com.dongyang.moviewreviewweb.moviereviewer.email;
 
 import com.dongyang.moviewreviewweb.moviereviewer.member.service.RegisterService;
+import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -18,7 +17,6 @@ public class EmailServiceImpl implements EmailService {
     //의존성 주입을 통해서 필요한 객체를 가져온다.
     private final JavaMailSender emailSender;
     private final RegisterService registerService;
-    private final VerificationRepository verificationRepository;
     private String authNum; //랜덤 인증 코드
 
     //랜덤 인증 코드 생성
@@ -65,34 +63,24 @@ public class EmailServiceImpl implements EmailService {
         SimpleMailMessage simpleMailMessage = createEmailForm(toEmail);
         //실제 메일 전송
         emailSender.send(simpleMailMessage);
-        deleteAlreadyData(toEmail);
-        Timestamp duration = Timestamp.valueOf(LocalDateTime.now().plusMinutes(5));
-        verificationRepository.save(new Verification(toEmail, authNum, duration));
         return authNum; //인증 코드 반환
     }
     @Override
-    public void validateAuthorizationKey(String email, String key) {
-        removeExpiredVerification();
-        Optional<Verification> authorizationData = verificationRepository.findById(email);
-        if (authorizationData.isEmpty())
+    public void validateAuthorizationKey(String email, String key, HttpSession session) {
+        if (session.getAttribute("key") == null)
             throw new IllegalArgumentException("인증정보가 존재하지 않습니다.");
-        Verification authorization = authorizationData.get();
-        if (!authorization.isCertified(key))
+        String sessionKey = (String) session.getAttribute("key");
+        if (!sessionKey.equals(key))
             throw new IllegalArgumentException("인증키가 올바르지 않습니다.");
-        verificationRepository.deleteById(email);
+        session.removeAttribute("key");
     }
     @Override
-    public void deleteVerificatedScheduler (String email) {
-        verificationRepository.deleteById(email);
-    }
-    public void removeExpiredVerification () {
+    public void removeExpiredVerification(HttpSession session) {
         Timestamp now = Timestamp.valueOf(LocalDateTime.now());
-        verificationRepository.deleteAllBeforeTimestamp(now);
-    }
-    @Override
-    public void deleteAlreadyData (String email) {
-        Optional<Verification> v = verificationRepository.findById(email);
-        if (v.isPresent())
-            verificationRepository.deleteById(email);
+        Timestamp t = (Timestamp) session.getAttribute("keyDuration");
+        if (now.after(t)) {
+            session.removeAttribute("key");
+            session.removeAttribute("keyDuration");
+        }
     }
 }
