@@ -16,7 +16,14 @@
     <p id="registerHint">계정이 이미 있는 경우<br>이곳으로 <a href="/login">로그인</a> 하세요</p>
 
     <label id="hintOfEmail" class="hintMessage">E-mail
-        <input name="id" class="loginInputButton" type="email" placeholder="E-mail" required>
+        <div id="emailVerifiedButton">
+            <input id="email" name="id" class="loginInputButton" type="email" placeholder="E-mail" required>
+            <button id="verifyButton" class="verifiedButton" type="button">인증번호 발급</button>
+        </div>
+        <div id="verifiedBlock">
+            <input id="verifiedKey" class="loginInputButton" type="text">
+            <button id="verifyEmailButton" class="verifiedButton" type="button">인증</button>
+        </div>
     </label>
     <label class="hintMessage">User name
         <input name="name" class="loginInputButton" type="text" placeholder="User name" maxlength="40" required>

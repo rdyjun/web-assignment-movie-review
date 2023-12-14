@@ -1,5 +1,6 @@
 package com.dongyang.moviewreviewweb.moviereviewer.member.controller;
 
+import com.dongyang.moviewreviewweb.moviereviewer.email.EmailService;
 import com.dongyang.moviewreviewweb.moviereviewer.log.Log;
 import com.dongyang.moviewreviewweb.moviereviewer.log.LogDAO;
 import com.dongyang.moviewreviewweb.moviereviewer.member.entity.Login;
@@ -37,6 +38,7 @@ public class SignController {
     private final ReviewLikeService reviewLikeService;
     private final ReviewService reviewService;
     private final MemberService memberService;
+    private final EmailService emailService;
     @PostMapping("/login-validate")
     public String login (Login loginDTO, HttpSession httpSession) throws SQLException, ClassNotFoundException, AccessDeniedException {
         loginService.login(loginDTO, httpSession);

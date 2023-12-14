@@ -108,3 +108,19 @@ body {
     background-image: url("https://github.com/rdyjun/Coding-Test/assets/45596014/6b6331e9-f842-4d16-a2da-ec0e00fb80c0");
     background-size: 20px;
 }
+#emailVerifiedButton {
+    display: flex;
+    gap: 24px;
+}
+.verifiedButton {
+    width: 150px;
+    height: 62px;
+    background-color: #9664FF;
+    color: white;
+    border-radius: 10px;
+}
+#verifiedBlock {
+    margin-top: 20px;
+    gap: 24px;
+    display: none;
+}

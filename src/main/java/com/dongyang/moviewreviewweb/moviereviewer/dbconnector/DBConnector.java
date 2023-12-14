@@ -1,8 +1,6 @@
 package com.dongyang.moviewreviewweb.moviereviewer.dbconnector;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
@@ -18,10 +16,10 @@ public class DBConnector {
         this.env = env;
     }
     public Connection getConnect() {
-        String dbDriver = env.getProperty("database.driver");
-        String dbUrl = env.getProperty("database.url");
-        String userName = env.getProperty("database.username");
-        String password = env.getProperty("database.password");
+        String dbDriver = env.getProperty("spring.datasource.driver-class-name");
+        String dbUrl = env.getProperty("spring.datasource.url");
+        String userName = env.getProperty("spring.datasource.username");
+        String password = env.getProperty("spring.datasource.password");
         try {
             Class.forName(dbDriver);
             return DriverManager.getConnection(dbUrl, userName, password);
