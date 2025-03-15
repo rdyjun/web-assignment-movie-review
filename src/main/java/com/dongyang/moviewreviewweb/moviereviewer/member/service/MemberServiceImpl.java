@@ -14,10 +14,12 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class MemberServiceImpl implements MemberService {
+
     private final MemberRepository memberRepository;
+
     @Override
     public List<MemberFace> getNoneBlackListMemberList() {
-        List<Member> memberList = memberRepository.findByBlackList(false);
+        List<Member> memberList = memberRepository.findByStatus(false);
         List<MemberFace> memberFaceList = new ArrayList<>();
         for (Member member : memberList)
             memberFaceList.add(new MemberFace(member));
@@ -26,20 +28,28 @@ public class MemberServiceImpl implements MemberService {
 
     @Override
     public List<MemberFace> getBlackListMemberList() {
-        List<Member> memberList = memberRepository.findByBlackList(true);
+        List<Member> memberList = memberRepository.findByStatus(true);
         List<MemberFace> memberFaceList = new ArrayList<>();
         for (Member member : memberList)
             memberFaceList.add(new MemberFace(member));
         return memberFaceList;
     }
+
     @Override
     public void reverseMemberStatus (String memberId) {
-        boolean status = memberRepository.findByIdAtStatus(memberId);
-        if (status)
-            memberRepository.updateBlockByIdAndStatus(memberId, false);
-        if (!status)
-            memberRepository.updateBlockByIdAndStatus(memberId, true);
+        Member member = getMemberData(memberId);
+
+        if (member.isBlocked()) {
+            member.unblock();
+        }
+
+        if (!member.isBlocked()) {
+            member.block();
+        }
+
+        memberRepository.save(member);
     }
+
     @Override
     public Member getMemberData(String memberId) {
         Optional<Member> member = memberRepository.findById(memberId);
@@ -47,10 +57,14 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalArgumentException("회원 정보가 존재하지 않습니다.");
         return member.get();
     }
+
     @Override
     public void modifyMemberName(String memberId, String newName) {
-        memberRepository.updateMemberNameByMemberId(memberId, newName);
+        Member member = getMemberData(memberId);
+        member.modifyName(newName);
+        memberRepository.save(member);
     }
+
     @Override
     public List<String> getMemberNameByReview(List<Review> reviewList) {
         List<String> memberNameList = new ArrayList<>();
@@ -62,4 +76,5 @@ public class MemberServiceImpl implements MemberService {
         }
         return memberNameList;
     }
+
 }
